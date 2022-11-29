@@ -1,16 +1,4 @@
-from github import Github
 from config import token
-g = Github(token)
+from Github.github import print_all_files_in_organization
 
-org = g.get_organization("Beavers-linter")
-for repo in org.get_repos():
-    print(f"""Name of repo - {repo}
-    ===============================
-    """)
-    files = repo.get_contents("")
-    print(f"""{files}
-    =========================
-    =========================
-    """)
-    for file in files:
-        file_context = file.decoded_content.decode("utf-8")
+print_all_files_in_organization(token,"Beavers-linter")
