@@ -1,8 +1,10 @@
-from config import token
-from Github.github import get_files_from_organization, get_context_from_file
+from config import TOKEN
+from Github.github_model import get_files_from_organization, get_context_from_file
+from data_analyze.analyze_engine import analyze_file
 
-
-files = get_files_from_organization(token, "Beavers-linter")
+files = get_files_from_organization(TOKEN, "Beavers-linter")
 for file in files:
-    print("file name: ", file)
-    print("configtext: ", get_context_from_file(file["file"]))
+    # print("file name: ", file)
+    # print("file content: ", get_context_from_file(file["file"]))
+    analyze_file(file["file"], "hashlib")
+
