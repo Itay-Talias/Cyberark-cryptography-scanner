@@ -14,3 +14,7 @@ words = [{"word": "sha1", "meaning": "sha1"},
             {"word":"shake_128", "meaning": "shake_128"},
             {"word":"shake_256", 'meaning': "shake_256"},
             {"word":"scrypt", "meaning": "The function provides scrypt password-based key derivation function as defined in RFC 7914"}]
+
+
+def get_words() -> list[object]:
+    return words
