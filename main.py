@@ -1,6 +1,4 @@
 from config import token
-from Github.github import get_files_from_organization,get_context_from_file
+from Github.github import print_all_files_in_organization
 
-
-
-get_files_from_organization(token,"Beavers-linter")
+print_all_files_in_organization(token, "Beavers-linter")
