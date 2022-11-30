@@ -9,17 +9,21 @@ def get_repos(organization: Organization) -> Repository:
     return organization.get_repos()
 
 
-def get_files_from_repo(repo: Repository) -> list[ContentFile]:
-    return repo.get_contents("")
-
-
 def get_context_from_file(file: ContentFile):
     return file.decoded_content.decode("utf-8")
 
 
-def print_all_files_in_organization(token: str ,organization: str):
+def get_all_files_from_dir(repo: Repository,path: str,list_file: list[object]):
+    for file in repo.get_dir_contents(path):
+        if file.type=="file" :
+            list_file.append({"repo":repo.full_name,"path":path,"file":file})
+        elif file.type=="dir" :
+            get_all_files_from_dir(repo,file.path,list_file)
+
+
+def get_files_from_organization(token: str ,organization: str) -> list[object]:
     org = connect_to_github(token,organization)
+    list_file = []
     for repo in get_repos(org):
-        print(f'Name of repo - {repo}')
-        files = get_files_from_repo(repo)
-        print(f'{files}')
+        get_all_files_from_dir(repo,"./",list_file)
+    return list_file
