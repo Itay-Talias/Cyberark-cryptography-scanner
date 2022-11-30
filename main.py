@@ -1,4 +1,7 @@
 from config import token
-from Github.github import print_all_files_in_organization
+from github_dir.github_handler import get_files_from_organization
+from mapping_files.mapping_reducer import mapping_files
 
-print_all_files_in_organization(token, "Beavers-linter")
+f = get_files_from_organization(token, "Beavers-linter")
+print(f)
+print(mapping_files(f, ["hashlib"]))
