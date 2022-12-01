@@ -1,9 +1,7 @@
-from fastapi import FastAPI, HTTPException, status
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 from typing import List
-from vcs_api.github_api import get_files_from_organization
-
 
 app = FastAPI()
 #, status_code = status.HTTP_200_OK
