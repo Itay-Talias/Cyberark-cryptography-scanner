@@ -1,5 +1,5 @@
 from github import ContentFile
-from github_dir.github_handler import get_context_from_file
+from vcs_api.github_api import get_context_from_file
 from data_analyze.libraries.libraries_data import libraries
 
 

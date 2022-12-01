@@ -25,5 +25,5 @@ def get_files_from_organization(token: str ,organization: str) -> list[object]:
     org = connect_to_github(token,organization)
     list_file = []
     for repo in get_repos(org):
-        get_all_files_from_dir(repo,"./",list_file)
+        get_all_files_from_dir(repo, "/", list_file)
     return list_file
