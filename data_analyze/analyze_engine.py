@@ -1,5 +1,5 @@
 from github import ContentFile
-from Github.github_model import get_context_from_file
+from github_dir.github_handler import get_context_from_file
 from data_analyze.libraries.python_libraries import hashlib_data
 
 
