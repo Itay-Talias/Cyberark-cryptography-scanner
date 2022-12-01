@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 from typing import List
 
-app = FastAPI()
+app = FastAPI
 #, status_code = status.HTTP_200_OK
 @app.get("/files")
 def get_files() -> List[dict]:

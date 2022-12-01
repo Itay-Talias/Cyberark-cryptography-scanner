@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 pygithub = "*"
 pylint = "*"
+fastapi = "*"
 
 [dev-packages]
 
