@@ -1,7 +1,11 @@
 {
     "_meta": {
         "hash": {
+<<<<<<< HEAD
+            "sha256": "2313664efe7fa7dea947c83ca8d0e0b06df252b0a765156a72ddf0d18b020bda"
+=======
             "sha256": "84e2f1b42ee4846afb3c35c9c3774900e1b7f34221e400ddfd340de0f94a431f"
+>>>>>>> origin
         },
         "pipfile-spec": 6,
         "requires": {
@@ -157,6 +161,8 @@
             "index": "pypi",
             "version": "==0.88.0"
         },
+<<<<<<< HEAD
+=======
         "h11": {
             "hashes": [
                 "sha256:8f19fbbe99e72420ff35c00b27a34cb9937e902a8b810e2c88300c6f0a3b699d",
@@ -165,6 +171,7 @@
             "markers": "python_version >= '3.7'",
             "version": "==0.14.0"
         },
+>>>>>>> origin
         "idna": {
             "hashes": [
                 "sha256:814f528e8dead7d329833b91c5faa87d60bf71824cd12a7530b5526063d02cb4",
@@ -271,6 +278,17 @@
             "markers": "python_version >= '3.7'",
             "version": "==1.10.2"
         },
+<<<<<<< HEAD
+        "pydentic": {
+            "hashes": [
+                "sha256:4c5ee9c260e3cbcdb2a2d725b1d98046cb2b5298e6d6154449a685cf4cca85ec",
+                "sha256:b37f690f262e02e781deae8588a411c596489bc2837701fbb5e8c59b31b4236e"
+            ],
+            "index": "pypi",
+            "version": "==0.0.1.dev3"
+        },
+=======
+>>>>>>> origin
         "pygithub": {
             "hashes": [
                 "sha256:5822febeac2391f1306c55a99af2bc8f86c8bf82ded000030cd02c18f31b731f",
@@ -310,6 +328,13 @@
             ],
             "markers": "python_version >= '3.6'",
             "version": "==1.5.0"
+        },
+        "python-stdnum": {
+            "hashes": [
+                "sha256:bcc763d9c49ae23da5d2b7a686d5fd1deec9d9051341160a10d1ac723a26bec0",
+                "sha256:d7f2a3c7ef4635c957b9cbdd9b1993d1f6ee3a2959f03e172c45440d99f296eb"
+            ],
+            "version": "==1.18"
         },
         "requests": {
             "hashes": [

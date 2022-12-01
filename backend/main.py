@@ -1,10 +1,6 @@
 from config import TOKEN
-from vcs_api.github_api import get_files_from_organization
-from data_analyze.analyze_engine import analyze_file
-from github import ContentFile
+from vcs_api.github_api_facade import GithubAPIFacade
+from extract_files.extract_by_libraries import extract_by_libraries
 
-files = get_files_from_organization(TOKEN, "Beavers-linter")
-
-for file in files:
-    file["libraries"] = {'hashlib', 'bcrypt'}
-    analyze_file(file, "python")
+g = GithubAPIFacade(TOKEN, "Beavers-linter")
+print(extract_by_libraries(g.get_files_from_organization(), ["hashlib"]))
