@@ -1,5 +1,6 @@
 def mapping_files(filelist: list[object]) -> list[object]:
-    return list(map(mapping_file, filelist))
+    map_list = list(map(mapping_file, filelist))
+    return list(filter(filter_file,map_list))
 
 
 def mapping_file(file: object) -> object:
@@ -11,3 +12,9 @@ def mapping_file(file: object) -> object:
 
     file["libraries"] = libraries_in_file
     return file
+
+def filter_file(file: object) -> bool:
+    if len(file["libraries"]) > 0:
+        return True
+
+    return False
