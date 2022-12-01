@@ -1,6 +1,5 @@
 from config import TOKEN
 from vcs_api.github_api import GithubAPIFacade
-# from data_analyze.analyze_engine import analyze_file
-
+from extract_files.extract_by_libraries import extract_by_libraries
 g = GithubAPIFacade(TOKEN, "Beavers-linter")
-print(g.get_files_from_organization())
+print(extract_by_libraries(g.get_files_from_organization(),["hashlib"]))

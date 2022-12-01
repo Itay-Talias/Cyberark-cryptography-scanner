@@ -1,4 +1,5 @@
 from github import Github,Organization,Repository,ContentFile
+from file import File
 
 
 class GithubAPIFacade:
@@ -26,7 +27,7 @@ class GithubAPIFacade:
     def get_all_files_from_dir(repo: Repository,path: str,list_file: list[object]):
         for file in repo.get_dir_contents(path):
             if file.type == "file":
-                list_file.append({"repo":repo.full_name, "path":path, "file":file})
+                list_file.append(File())
             elif file.type == "dir":
                 GithubAPIFacade.get_all_files_from_dir(repo, file.path, list_file)
 
