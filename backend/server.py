@@ -3,8 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 from error_handler import error_handler
 from vcs_api.vcs_factory import create_vcs_connector
-from extract_files.extract_by_libraries import extract_by_libraries
-
+from extract_files.extract_by_libraries import extract_by_libraries, extract_by_libraries_ast
 app = FastAPI()
 
 
@@ -12,11 +11,11 @@ app = FastAPI()
 async def get_files(request: Request) -> list[object]:
     try:
         result: dict = await request.json()
-        error_handler.post_request(client_data=result)
+        error_handler.post_request(client_data = result)
         org = create_vcs_connector(token=result["token"], organization=result["organization"], vcs_type=result["vcs_type"])
     except Exception as error:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=error)
-    return extract_by_libraries(org.get_files_from_organization(), ["hashlib"])
+    return extract_by_libraries_ast(org.get_files_from_organization(), ["hashlib"])
 
 
 origins = [

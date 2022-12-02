@@ -1,6 +1,7 @@
 BAD_REQUEST_MSG = "General error pls refresh the page"
 TOKEN_ERROR_MSG = "Invalid transaction operation"
 ORGANIZATION_NAME = "Invalid organization name"
+CRYPTO_TYPE = "Invalid crypto type"
 
 def post_request(client_data: dict):
     if client_data == None:
@@ -10,4 +11,4 @@ def post_request(client_data: dict):
     if not isinstance(client_data["organization"], str):
         raise TypeError(ORGANIZATION_NAME)
     if not isinstance(client_data["vcs_type"], str):
-        raise TypeError(ORGANIZATION_NAME)
+        raise TypeError(CRYPTO_TYPE)

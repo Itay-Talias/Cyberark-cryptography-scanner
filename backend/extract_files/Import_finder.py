@@ -1,6 +1,6 @@
 import ast
 
-class ImportFinder(ast.NodeVisitor):
+class Import_finder(ast.NodeVisitor):
     def __init__(self):
         self.imports = []
 
