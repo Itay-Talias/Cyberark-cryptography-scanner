@@ -13,9 +13,11 @@ async def get_files(request: Request) -> list[object]:
         result: dict = await request.json()
         error_handler.post_request(client_data = result)
         org = create_vcs_connector(token=result["token"], organization=result["organization"], vcs_type=result["vcs_type"])
+        return extract_by_libraries_ast(org.get_files_from_organization(), ["hashlib"])
+    except ValueError as error:
+        print(error)
     except Exception as error:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=error)
-    return extract_by_libraries_ast(org.get_files_from_organization(), ["hashlib"])
 
 
 origins = [
