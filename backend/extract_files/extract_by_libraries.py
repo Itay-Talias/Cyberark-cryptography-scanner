@@ -1,5 +1,5 @@
 import ast
-from backend.extract_files.Import_finder import Import_finder
+from extract_files.Import_finder import Import_finder
 code_files_suffix = {"py"}
 def filter_empty_libraries(file: object) -> bool:
     if len(file["libraries"]) > 0:

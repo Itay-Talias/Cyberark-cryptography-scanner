@@ -9,6 +9,7 @@ pylint = "*"
 fastapi = "*"
 pydentic = "*"
 uvicorn = "*"
+pymysql = "*"
 
 [dev-packages]
 
