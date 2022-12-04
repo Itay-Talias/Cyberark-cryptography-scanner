@@ -38,12 +38,13 @@ def libraries_mapping_ast(file: object, libraries: list[str]) -> object:
 
 def is_file_import_lib(library : str, file_context : str) -> bool :
     imports_names = []
-    imports = parse_imports(file_context)
+    imports= parse_imports(file_context)
     for import_obj in imports:
-        libs_names : list[str] = import_obj[1][0]
-        imports_names.append(libs_names)
+        names : list[str] = import_obj[1][0]
+        imports_names.append(names)
 
-    res = any(library in libs_names for libs_names in imports_names)
+    res = any(library in names for names in imports_names)
+    #any(library in (for i in imp[1]) for imp in import_names)
     return res
 
 def parse_imports(source):
