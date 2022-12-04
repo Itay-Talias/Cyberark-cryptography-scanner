@@ -1,6 +1,7 @@
 from fastapi import FastAPI, HTTPException, status, Request
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
+import json
 from error_handler import error_handler
 from vcs_api.vcs_factory import create_vcs_connector
 from extract_files.extract_by_libraries import extract_by_libraries, extract_by_libraries_ast
@@ -8,16 +9,15 @@ app = FastAPI()
 
 
 @app.post("/files", status_code=status.HTTP_201_CREATED)
-async def get_files(request: Request) -> list[object]:
+async def get_files(request: Request):
     try:
         result: dict = await request.json()
-        error_handler.post_request(client_data = result)
+        error_handler.post_request(client_data=result)
         org = create_vcs_connector(token=result["token"], organization=result["organization"], vcs_type=result["vcs_type"])
-        return extract_by_libraries_ast(org.get_files_from_organization(), ["hashlib"])
+        files = extract_by_libraries_ast(org.get_files_from_organization(), ["hashlib"])
     except ValueError as error:
         print(error)
-    except Exception as error:
-        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=error)
+    return files
 
 
 origins = [
