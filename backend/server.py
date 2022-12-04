@@ -4,7 +4,8 @@ import uvicorn
 import json
 from error_handler import error_handler
 from vcs_api.vcs_factory import create_vcs_connector
-from extract_files.extract_by_libraries import extract_by_libraries, extract_by_libraries_ast
+from extract_files.extract_by_libraries import extract_by_libraries_ast
+from extract_files.function_finder import find_function
 app = FastAPI()
 
 
@@ -14,10 +15,13 @@ async def get_files(request: Request):
         result: dict = await request.json()
         error_handler.post_request(client_data=result)
         org = create_vcs_connector(token=result["token"], organization=result["organization"], vcs_type=result["vcs_type"])
-        files = extract_by_libraries_ast(org.get_files_from_organization(), ["hashlib"])
+        files = extract_by_libraries_ast(org.get_files_from_organization(), ["hashlib", "bycrypt"])
+        for file in files:
+            find_function(file["file"].decoded_content.decode("utf-8"))
     except ValueError as error:
         print(error)
-    return files
+    print(files)
+    return 0
 
 
 origins = [
