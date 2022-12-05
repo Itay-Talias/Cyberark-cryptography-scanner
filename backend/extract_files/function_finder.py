@@ -6,12 +6,7 @@ def find_function(source):
     for node in ast.walk(tree):
         if (
                 isinstance(node, ast.Call)  # It's a call
-                and isinstance(node.func, ast.Name)  # It directly invokes a name
-                and node.func.id == 'update'  # That name is `print`
+                and isinstance(node.func, ast.Attribute)
+                and ("sha" in node.func.attr or "blake" in node.func.attr or "md" in node.func.attr or "scrypt" in node.func.attr)
                 ):
-            # Check if any arg is the one we're looking for
-            print(any(
-                arg.value == "hard coded"
-                for arg in node.args
-                if isinstance(arg, ast.Constant)
-                ))
+            print(f"{node.lineno} : {node.func.value.id}.{node.func.attr}")

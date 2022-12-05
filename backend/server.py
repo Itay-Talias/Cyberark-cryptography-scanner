@@ -20,7 +20,6 @@ async def get_files(request: Request):
             find_function(file["file"].decoded_content.decode("utf-8"))
     except ValueError as error:
         print(error)
-    print(files)
     return 0
 
 
