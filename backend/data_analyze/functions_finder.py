@@ -1,12 +1,18 @@
 import ast
+from .libraries.libraries_data import libraries
 
 
-def find_function(source):
+def find_functions(source: str, language: str, library:str):
+    functions_uses = []
     tree = ast.parse(source, mode='exec')
     for node in ast.walk(tree):
         if (
                 isinstance(node, ast.Call)  # It's a call
                 and isinstance(node.func, ast.Attribute)
-                and ("sha" in node.func.attr or "blake" in node.func.attr or "md" in node.func.attr or "scrypt" in node.func.attr)
+                and is_lib_function(node.func.attr, library, language)
                 ):
-            print(f"{node.lineno} : {node.func.value.id}.{node.func.attr}")
+            functions_uses.append({"line-index" :node.lineno, "name" :node.func.attr})
+    return  functions_uses
+def is_lib_function(func: str, library: str, language: str) -> bool:
+    functions_list = libraries[language][library]["words"]
+    return func in functions_list

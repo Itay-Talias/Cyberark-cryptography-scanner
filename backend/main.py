@@ -1,6 +1,12 @@
-from config import TOKEN
-from vcs_api.github_api_facade import GithubAPIFacade
-from extract_files.extract_by_libraries import extract_by_libraries_ast
+# from config import TOKEN
+# from vcs_api.github_api_facade import GithubAPIFacade
+# from extract_files.extract_by_libraries import extract_by_libraries_ast
+#
+# g = GithubAPIFacade(TOKEN, "Beavers-linter")
+# print(extract_by_libraries_ast(g.get_files_from_organization(), ["hashlib"]))
 
-g = GithubAPIFacade(TOKEN, "Beavers-linter")
-print(extract_by_libraries_ast(g.get_files_from_organization(), ["hashlib"]))
+from hashlib import *
+m = sha256()
+m.update(b"Nobody inspects")
+m.update(b" the spammish repetition")
+print(m.digest())
