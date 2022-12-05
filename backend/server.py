@@ -24,8 +24,6 @@ async def get_files(request: Request):
     except TypeError as error:
         return JSONResponse({"Error": str(error)}, status_code=status.HTTP_400_BAD_REQUEST)
 
-
-
 origins = [
     "http://localhost",
     "http://localhost:3000",

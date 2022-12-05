@@ -52,6 +52,8 @@ class DbManager(DAL):
             return JSONResponse({"Error": e},
                                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+    def get_scan_status(self) -> bool:
+        pass
 
 CONNECTOR = None
 
