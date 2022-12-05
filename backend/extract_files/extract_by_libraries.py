@@ -1,5 +1,5 @@
 import ast
-from backend.extract_files.Import_finder import Import_finder
+from extract_files.Import_finder import Import_finder
 code_files_suffix = {"py"}
 def extract_by_libraries(filelist: list[object], libraries: list[str]) -> list[object]:
     map_list = list(map(lambda file: libraries_mapping(file, libraries), filelist))
