@@ -1,7 +1,6 @@
 from fastapi import FastAPI, HTTPException, status, Request
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
-import json
 from error_handler import error_handler
 from vcs_api.vcs_factory import create_vcs_connector
 from extract_files.extract_by_libraries import extract_by_libraries, extract_by_libraries_ast
