@@ -21,74 +21,26 @@ import Switch from "@mui/material/Switch";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
+import { ResultsContext } from "../App";
 
-function createData(algorithm, library, keyLength, location, category) {
-    return {
-        algorithm,
-        library,
-        keyLength,
-        location,
-        category,
-    };
+function createData(results) {
+    const rows =
+        results.length > 0
+            ? results.map((arr) => {
+                  return arr.map((row) => {
+                      return {
+                          algorithm: row["algorithm"],
+                          library: row["library"],
+                          keyLength: 0,
+                          location: `${row["location"]["repo"]} ${row["location"]["path"]} ${row["location"]["line_index"]}`,
+                          category: row["category"],
+                      };
+                  });
+              })
+            : [];
+    const res = rows.flat(1);
+    return res;
 }
-
-const rows = [
-    createData("sha256", "hashlib", 305, "repo1 path/to/file line 57", "Hash"),
-    createData("shapa", "hashlib", 452, "repo1 path/to/file line 57", "Hash"),
-    createData("Eclair", "hashlib", 262, "repo1 path/to/file line 57", "Hash"),
-    createData(
-        "Frozen yoghurt",
-        "hashlib",
-        159,
-        "repo1 path/to/file line 57",
-        "Hash"
-    ),
-    createData(
-        "Gingerbread",
-        "hashlib",
-        356,
-        "repo1 path/to/file line 57",
-        "Hash"
-    ),
-    createData(
-        "Honeycomb",
-        "hashlib",
-        408,
-        "repo1 path/to/file line 57",
-        "Hash"
-    ),
-    createData(
-        "Ice cream sandwich",
-        "hashlib",
-        237,
-        "repo1 path/to/file line 57",
-        "Hash"
-    ),
-    createData(
-        "Jelly Bean",
-        "hashlib",
-        375,
-        "repo1 path/to/file line 57",
-        "Hash"
-    ),
-    createData("KitKat", "hashlib", 518, "repo1 path/to/file line 57", "Hash"),
-    createData(
-        "Lollipop",
-        "hashlib",
-        392,
-        "repo1 path/to/file line 57",
-        "Hash"
-    ),
-    createData(
-        "Marshmallow",
-        "hashlib",
-        318,
-        "repo1 path/to/file line 57",
-        "Hash"
-    ),
-    createData("Nougat", "hashlib", 360, "repo1 path/to/file line 57", "Hash"),
-    createData("Oreo", "hashlib", 437, "repo1 path/to/file line 57", "Hash"),
-];
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -285,7 +237,8 @@ export default function EnhancedTable() {
     const [page, setPage] = React.useState(0);
     const [dense, setDense] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
-
+    const { results, setResults } = React.useContext(ResultsContext);
+    const rows = createData(results);
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === "asc";
         setOrder(isAsc ? "desc" : "asc");

@@ -1,5 +1,5 @@
 from vcs_api.github_api_facade import GithubAPIFacade
-from data_analyze.libraries.libraries_data import libraries
+from configuration.libraries.libraries_data import libraries
 
 
 def analyze_file(file: object, language: str) -> list[object]:
