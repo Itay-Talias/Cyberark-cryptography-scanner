@@ -32,6 +32,8 @@ class DbManager(DAL, ABC):
     def add_language(self, language_name: str) -> None:
         pass
 
+    def get_scan_status(self) -> bool:
+        pass
 
 CONNECTOR = None
 
@@ -40,7 +42,7 @@ def get_db_connector():
     global CONNECTOR
     if CONNECTOR is None:
         try:
-            CONNECTOR = DalSQL()
+            CONNECTOR = DbManager()
         except Exception as e:
             print(e)
     return CONNECTOR
