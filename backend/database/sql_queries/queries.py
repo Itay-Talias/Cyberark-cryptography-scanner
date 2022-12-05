@@ -1,0 +1,5 @@
+ADD_WORD = """INSERT INTO words (name) VALUES(%s)"""
+ADD_CATEGORY = """INSERT INTO categories (name) VALUES(%s)"""
+ADD_LANGUAGE = """INSERT INTO languages (name) VALUES(%s)"""
+ADD_LIBRARY = """INSERT INTO Libraries (name,LANGUAGE_id,category_id) VALUES(%s,%s,%s)"""
+ADD_LANGUAGES_WORDS = """INSERT INTO words (word_id, LANGUAGE_id) VALUES(%s,%s)"""
