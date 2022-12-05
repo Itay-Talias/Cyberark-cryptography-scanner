@@ -4,8 +4,17 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
+import { useState } from 'react'
+import { CryptographyScannerApi } from "../api/CryptographyScannerApi";
 
 export default function LandingPage() {
+    const [organization, setOrganization] = useState("")
+    const [token, setToken] = useState("")
+
+    async function handleSubmit(){
+        await CryptographyScannerApi().scan(organization, token)
+    }
+
     return (
         <Grid container alignItems="center" justifyContent="center">
             <Grid item>
@@ -26,6 +35,7 @@ export default function LandingPage() {
                             label="organization"
                             id="organization"
                             margin="normal"
+                            onChange={(e)=> setOrganization(e.target.value)}
                         />
                     </Box>
                     <Box
@@ -39,12 +49,13 @@ export default function LandingPage() {
                             label="token"
                             id="token"
                             margin="normal"
+                            onChange={(e)=> setToken(e.target.value)}
                         />
                     </Box>
                 </div>
             </Grid>
             <Grid item>
-                <Button variant="contained">Scan</Button>
+                <Button variant="contained" onClick = {()=>handleSubmit()} >Scan</Button>
             </Grid>
         </Grid>
     );
