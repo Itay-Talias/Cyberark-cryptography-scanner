@@ -1,14 +1,10 @@
-from abc import ABC
 from fastapi import status
-
-from constants import constant as consts
 from backend.database.dal import DAL
 from configuration.constants.configuration import *
 import pymysql as mysql
 from typing import List
 from fastapi.responses import JSONResponse
-
-from sql_queries.queries import ADD_LANGUAGE, ADD_LIBRARY
+from backend.database.sql_queries.queries import ADD_LANGUAGE, ADD_LIBRARY
 
 
 class DbManager(DAL):
