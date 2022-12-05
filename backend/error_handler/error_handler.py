@@ -3,6 +3,7 @@ TOKEN_ERROR_MSG = "Invalid token"
 ORGANIZATION_NAME = "Invalid organization name"
 VCS_TYPE = "Invalid version system control type"
 
+
 def post_request(client_data: dict):
     if client_data == None:
         raise ValueError(BAD_REQUEST_MSG)
