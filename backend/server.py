@@ -1,13 +1,15 @@
 from fastapi import FastAPI, HTTPException, status, Request
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
+from fastapi.responses import JSONResponse
 import json
 from error_handler import error_handler
 from vcs_api.vcs_factory import create_vcs_connector
 from extract_files.extract_by_libraries import extract_by_libraries_ast
-from extract_files.function_finder import find_function
+from data_analyze.analyze_engine import analyze_all_files
 app = FastAPI()
 
+PYTHON = "python"
 
 @app.post("/files", status_code=status.HTTP_201_CREATED)
 async def get_files(request: Request):
@@ -15,13 +17,12 @@ async def get_files(request: Request):
         result: dict = await request.json()
         error_handler.post_request(client_data=result)
         org = create_vcs_connector(token=result["token"], organization=result["organization"], vcs_type=result["vcs_type"])
-        files = extract_by_libraries_ast(org.get_files_from_organization(), ["hashlib", "bycrypt"])
-        for file in files:
-            find_function(file["file"].decoded_content.decode("utf-8"))
+        files = extract_by_libraries_ast(org.get_files_from_organization(), ["hashlib"])
+        return analyze_all_files(files, PYTHON)
     except ValueError as error:
-        print(error)
-    return 0
-
+        return JSONResponse({"Error": str(error)}, status_code=status.HTTP_400_BAD_REQUEST)
+    except TypeError as error:
+        return JSONResponse({"Error": str(error)}, status_code=status.HTTP_400_BAD_REQUEST)
 
 origins = [
     "http://localhost",
