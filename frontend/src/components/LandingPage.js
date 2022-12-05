@@ -4,15 +4,23 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
-import { useState } from 'react'
+import { useState } from "react";
 import { CryptographyScannerApi } from "../api/CryptographyScannerApi";
+import { ResultsContext } from "../App";
+import { useNavigate } from "react-router-dom";
 
 export default function LandingPage() {
-    const [organization, setOrganization] = useState("")
-    const [token, setToken] = useState("")
-
-    async function handleSubmit(){
-        await CryptographyScannerApi().scan(organization, token)
+    const [organization, setOrganization] = useState("");
+    const [token, setToken] = useState("");
+    const { results, setResults } = React.useContext(ResultsContext);
+    const navigate = useNavigate();
+    function handleSubmit() {
+        CryptographyScannerApi()
+            .scan(organization, token)
+            .then((res) => {
+                setResults(res.data);
+            });
+        navigate("/results");
     }
 
     return (
@@ -35,7 +43,7 @@ export default function LandingPage() {
                             label="organization"
                             id="organization"
                             margin="normal"
-                            onChange={(e)=> setOrganization(e.target.value)}
+                            onChange={(e) => setOrganization(e.target.value)}
                         />
                     </Box>
                     <Box
@@ -49,13 +57,15 @@ export default function LandingPage() {
                             label="token"
                             id="token"
                             margin="normal"
-                            onChange={(e)=> setToken(e.target.value)}
+                            onChange={(e) => setToken(e.target.value)}
                         />
                     </Box>
                 </div>
             </Grid>
             <Grid item>
-                <Button variant="contained" onClick = {()=>handleSubmit()} >Scan</Button>
+                <Button variant="contained" onClick={() => handleSubmit()}>
+                    Scan
+                </Button>
             </Grid>
         </Grid>
     );
