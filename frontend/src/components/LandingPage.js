@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
+import Button from "@mui/material/Button";
 
 export default function LandingPage() {
     return (
@@ -41,6 +42,9 @@ export default function LandingPage() {
                         />
                     </Box>
                 </div>
+            </Grid>
+            <Grid item>
+                <Button variant="contained">Scan</Button>
             </Grid>
         </Grid>
     );
