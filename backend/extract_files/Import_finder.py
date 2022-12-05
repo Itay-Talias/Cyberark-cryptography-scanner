@@ -12,10 +12,8 @@ class Import_finder(ast.NodeVisitor):
 
     def visit_ImportFrom(self, node):
         module = node.module
-        level = node.level  # how many dots
         names = []
         for i in node.names:
             names.append(i.name)
-
-        self.imports.append(('from', level, module, names))
+        self.imports.append(['import', [module]])
 
