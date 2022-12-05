@@ -1,8 +1,9 @@
 from abc import ABC
 from fastapi import status
 
-from constants import configuration as c
+from constants import constant as consts
 from backend.database.dal import DAL
+from configuration.constants.configuration import *
 import pymysql as mysql
 from typing import List
 from fastapi.responses import JSONResponse
@@ -11,8 +12,8 @@ from sql_queries.queries import ADD_LANGUAGE, ADD_LIBRARY
 
 
 class DbManager(DAL):
-    def __init__(self, user: str = c.DEFAULT_USER, pwd: str = c.DEFAULT_PWD, db: str = c.DEFAULT_DB,
-                 host: str = c.DEFAULT_HOST):
+    def __init__(self, user: str = DEFAULT_USER, pwd: str = DEFAULT_PWD, db: str = DEFAULT_DB,
+                 host: str = DEFAULT_HOST):
         self.connection = mysql.connect(
             host=host, user=user, password=pwd, db=db, charset="utf8", cursorclass=mysql.cursors.DictCursor,
             autocommit=True)
@@ -59,7 +60,7 @@ def get_db_connector():
     global CONNECTOR
     if CONNECTOR is None:
         try:
-            CONNECTOR = DalSQL()
+            CONNECTOR = DbManager()
         except Exception as e:
             print(e)
     return CONNECTOR
