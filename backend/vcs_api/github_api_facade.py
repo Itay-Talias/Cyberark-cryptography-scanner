@@ -31,3 +31,4 @@ class GithubAPIFacade(VscAPIFacade):
                 list_file.append({"repo": repo.full_name, "path": path, "file": file})
             elif file.type == "dir":
                 GithubAPIFacade.get_all_files_from_dir(repo, file.path, list_file)
+
