@@ -32,7 +32,10 @@ function createData(results) {
                           algorithm: row["algorithm"],
                           library: row["library"],
                           keyLength: 0,
-                          location: `${row["location"]["repo"]} ${row["location"]["path"]} ${row["location"]["line_index"]}`,
+                          repo: row["location"]["repo"],
+                          path: row["location"]["path"],
+                          line: row["location"]["line_index"],
+                          //   location: `${row["location"]["repo"]} ${row["location"]["path"]} line ${row["location"]["line_index"]}`,
                           category: row["category"],
                       };
                   });
@@ -92,10 +95,22 @@ const headCells = [
         label: "Key Length",
     },
     {
-        id: "location",
+        id: "repo",
         numeric: false,
         disablePadding: false,
-        label: "Location",
+        label: "Repo",
+    },
+    {
+        id: "path",
+        numeric: false,
+        disablePadding: false,
+        label: "Path",
+    },
+    {
+        id: "line",
+        numeric: false,
+        disablePadding: false,
+        label: "Line",
     },
     {
         id: "category",
@@ -360,7 +375,13 @@ export default function EnhancedTable() {
                                                 {row.keyLength}
                                             </TableCell>
                                             <TableCell align="left">
-                                                {row.location}
+                                                {row.repo}
+                                            </TableCell>
+                                            <TableCell align="left">
+                                                {row.path}
+                                            </TableCell>
+                                            <TableCell align="left">
+                                                {row.line}
                                             </TableCell>
                                             <TableCell align="left">
                                                 {row.category}
