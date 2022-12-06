@@ -1,9 +1,9 @@
 from configuration.libraries import libraries_data
-from backend.database.db_manger import DbManager
+from backend.database.db_manger import get_db_connector
 
-dbManager = DbManager()
-
-for language, libraries in list(libraries_data.items()):
+dbManager = get_db_connector()
+language_data = libraries_data.libraries
+for language, libraries in list(language_data.items()):
     dbManager.add_language(language)
     libs = list(libraries.items())
     language_id=1
