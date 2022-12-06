@@ -55,6 +55,7 @@ export default function LandingPage() {
                         <TextField
                             fullWidth
                             label="token"
+                            type="password"
                             id="token"
                             margin="normal"
                             onChange={(e) => setToken(e.target.value)}
