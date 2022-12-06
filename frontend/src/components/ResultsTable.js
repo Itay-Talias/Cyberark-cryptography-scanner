@@ -22,6 +22,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
 import { ResultsContext } from "../App";
+import LinearProgress from "@mui/material/LinearProgress";
+import Grid from "@mui/material/Grid";
 
 function createData(results) {
     const rows =
@@ -329,66 +331,77 @@ export default function EnhancedTable() {
                         <TableBody>
                             {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                  rows.sort(getComparator(order, orderBy)).slice() */}
-                            {stableSort(rows, getComparator(order, orderBy))
-                                .slice(
-                                    page * rowsPerPage,
-                                    page * rowsPerPage + rowsPerPage
-                                )
-                                .map((row, index) => {
-                                    const isItemSelected = isSelected(row.name);
-                                    const labelId = `enhanced-table-checkbox-${index}`;
+                            {rows.length > 0 ? (
+                                stableSort(rows, getComparator(order, orderBy))
+                                    .slice(
+                                        page * rowsPerPage,
+                                        page * rowsPerPage + rowsPerPage
+                                    )
+                                    .map((row, index) => {
+                                        const isItemSelected = isSelected(
+                                            row.name
+                                        );
+                                        const labelId = `enhanced-table-checkbox-${index}`;
 
-                                    return (
-                                        <TableRow
-                                            hover
-                                            onClick={(event) =>
-                                                handleClick(event, row.name)
-                                            }
-                                            role="checkbox"
-                                            aria-checked={isItemSelected}
-                                            tabIndex={-1}
-                                            key={row.name}
-                                            selected={isItemSelected}
-                                        >
-                                            <TableCell padding="checkbox">
-                                                <Checkbox
-                                                    color="primary"
-                                                    checked={isItemSelected}
-                                                    inputProps={{
-                                                        "aria-labelledby":
-                                                            labelId,
-                                                    }}
-                                                />
-                                            </TableCell>
-                                            <TableCell
-                                                component="th"
-                                                id={labelId}
-                                                scope="row"
-                                                padding="none"
+                                        return (
+                                            <TableRow
+                                                hover
+                                                onClick={(event) =>
+                                                    handleClick(event, row.name)
+                                                }
+                                                role="checkbox"
+                                                aria-checked={isItemSelected}
+                                                tabIndex={-1}
+                                                key={row.name}
+                                                selected={isItemSelected}
                                             >
-                                                {row.algorithm}
-                                            </TableCell>
-                                            <TableCell align="left">
-                                                {row.library}
-                                            </TableCell>
-                                            <TableCell align="center">
-                                                {row.keyLength}
-                                            </TableCell>
-                                            <TableCell align="left">
-                                                {row.repo}
-                                            </TableCell>
-                                            <TableCell align="left">
-                                                {row.path}
-                                            </TableCell>
-                                            <TableCell align="left">
-                                                {row.line}
-                                            </TableCell>
-                                            <TableCell align="left">
-                                                {row.category}
-                                            </TableCell>
-                                        </TableRow>
-                                    );
-                                })}
+                                                <TableCell padding="checkbox">
+                                                    <Checkbox
+                                                        color="primary"
+                                                        checked={isItemSelected}
+                                                        inputProps={{
+                                                            "aria-labelledby":
+                                                                labelId,
+                                                        }}
+                                                    />
+                                                </TableCell>
+                                                <TableCell
+                                                    component="th"
+                                                    id={labelId}
+                                                    scope="row"
+                                                    padding="none"
+                                                >
+                                                    {row.algorithm}
+                                                </TableCell>
+                                                <TableCell align="left">
+                                                    {row.library}
+                                                </TableCell>
+                                                <TableCell align="center">
+                                                    {row.keyLength}
+                                                </TableCell>
+                                                <TableCell align="left">
+                                                    {row.repo}
+                                                </TableCell>
+                                                <TableCell align="left">
+                                                    {row.path}
+                                                </TableCell>
+                                                <TableCell align="left">
+                                                    {row.line}
+                                                </TableCell>
+                                                <TableCell align="left">
+                                                    {row.category}
+                                                </TableCell>
+                                            </TableRow>
+                                        );
+                                    })
+                            ) : (
+                                <TableRow>
+                                    <TableCell colSpan={12}>
+                                        <h1 align="center">scanning...</h1>
+                                        <LinearProgress />
+                                    </TableCell>
+                                </TableRow>
+                            )}
                             {emptyRows > 0 && (
                                 <TableRow
                                     style={{
