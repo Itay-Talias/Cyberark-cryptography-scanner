@@ -23,7 +23,7 @@ data = {
             "words": [{"hashpw": "sha1", "details": "", "key_size": "n/a"},
                       {"kdf": "sha224", "details": "", "key_size": "n/a"}]
         },
-        "cryptography.fernet": {
+        "cryptography.fernet.Fernet": {
             "category": "encryption/decryption",
             "words": [{"word": "generate_key", "details": "", "key_size": "128 bit"},
                       {"word": "encrypt", "details": "AES", "key_size": "128 bit"},
