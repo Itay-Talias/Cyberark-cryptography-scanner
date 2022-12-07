@@ -8,7 +8,7 @@ def filter_empty_libraries(file: object) -> bool:
     return False
 
 def extract_by_libraries_ast(filelist: list[object], libraries: list[str]) -> list[object]:
-    filtered_code_filelist = list(filter(lambda file:file["file"].name.rsplit('.', 1)[-1] in code_files_suffix, filelist))
+    filtered_code_filelist = list(filter(lambda file: file["file"].name.rsplit('.', 1)[-1] in code_files_suffix, filelist))
     map_list = list(map(lambda file: libraries_mapping_ast(file, libraries), filtered_code_filelist))
     filtered_list = list(filter(filter_empty_libraries, map_list))
     return filtered_list
@@ -29,8 +29,7 @@ def file_import_lib(file_context : str) -> set[str]:
     libraries_in_file = set()
     imports = parse_imports(file_context)
     for import_obj in imports:
-        libs_names: list[str] = import_obj[1][0].rsplit('.')[0]
-        libraries_in_file.add(libs_names)
+        libraries_in_file.add(import_obj)
     return libraries_in_file
 
 def parse_imports(source):

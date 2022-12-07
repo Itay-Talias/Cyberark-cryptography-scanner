@@ -1,11 +1,9 @@
 import ast
-from database.data.libraries_data import data
 
 class Call_finder(ast.NodeVisitor):
-    def __init__(self, language, library):
+    def __init__(self, functions_words: list[str]):
         self.functions = []
-        self.library = library
-        self.language = language
+        self.functions_words = functions_words
 
     def visit_Call(self, node):
         if(isinstance(node.func, ast.Attribute)):
@@ -21,5 +19,4 @@ class Call_finder(ast.NodeVisitor):
             self.functions.append({"line-index": node.lineno, "name": node.func.id})
 
     def is_lib_function(self,func: str) -> bool:
-        functions_list = data[self.language][self.library]["words"]
-        return func in functions_list
+        return func in self.functions_words
