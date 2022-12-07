@@ -26,6 +26,17 @@ export default function LandingPage() {
     return (
         <Grid container alignItems="center" justifyContent="center">
             <Grid item>
+                <Box
+                component="img"
+                sx={{
+                  height: 200,
+                  width: 200,
+                  maxHeight: { xs: 200, md: 200 },
+                  maxWidth: { xs: 200, md: 200 },
+                }}
+                alt="cyberark logo"
+                src="https://avatars.githubusercontent.com/u/30869256?s=280&v=4"
+              />
                 <Typography variant="h3" gutterBottom>
                     CyberArk Cryptography Scanner
                 </Typography>
