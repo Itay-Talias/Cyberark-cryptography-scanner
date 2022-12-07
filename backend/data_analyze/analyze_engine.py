@@ -12,10 +12,11 @@ def analyze_file(file: object, language: str) -> list[object]:
         finder.visit(tree)
         algorithm_uses = finder.functions
         file_results = {
+            "success": file["success"],
             "category": libraries[language][library]["category"],
             "library": library,
             "algorithms": algorithm_uses,
-            "utl": file["url"],
+            "url": file["url"],
             "location": {"repo": file["repo"],
                          "path": file["file"].path}
         }
@@ -25,5 +26,12 @@ def analyze_file(file: object, language: str) -> list[object]:
 def analyze_all_files(files, language: str):
     all_files_results = []
     for file in files:
-        all_files_results.append(analyze_file(file, language))
+        if file["success"]:
+            all_files_results.append(analyze_file(file, language))
+        else:
+            all_files_results.append(
+                {"success": file["success"],
+                "url": file["url"],
+                "location": {"repo": file["repo"],
+                             "path": file["file"].path}})
     return all_files_results
