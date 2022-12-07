@@ -1,8 +1,8 @@
 from github import Github, Organization, Repository, ContentFile
-from .vsc_api_facade import VscAPIFacade
+from .vsc_api import VscAPI
 
 
-class GithubAPIFacade(VscAPIFacade):
+class GithubAPI(VscAPI):
 
     def __init__(self, token: str, organization: str):
         super().__init__(organization=organization)
@@ -28,7 +28,6 @@ class GithubAPIFacade(VscAPIFacade):
     def get_all_files_from_dir(repo: Repository, path: str, list_file: list[object]):
         for file in repo.get_dir_contents(path):
             if file.type == "file":
-                list_file.append({"repo": repo.full_name, "path": path, "file": file})
+                list_file.append({"repo": repo.full_name, "path": path, "file": file, "url": file.html_url})
             elif file.type == "dir":
-                GithubAPIFacade.get_all_files_from_dir(repo, file.path, list_file)
-
+                GithubAPI.get_all_files_from_dir(repo, file.path, list_file)

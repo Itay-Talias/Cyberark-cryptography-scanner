@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 
-class VscAPIFacade(ABC):
+class VscAPI(ABC):
     @abstractmethod
     def __init__(self, organization: str):
         self.organization = organization

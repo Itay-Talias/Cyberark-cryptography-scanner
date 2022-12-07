@@ -1,10 +1,10 @@
-from .vsc_api_facade import VscAPIFacade
-from .github_api_facade import GithubAPIFacade
+from .vsc_api import VscAPI
+from .github_api import GithubAPI
 from enum import Enum
 
 class Vcs_type(Enum):
     github = "github"
 
-def create_vcs_connector( token: str, organization: str, vcs_type: str) -> VscAPIFacade:
+def create_vcs_connector( token: str, organization: str, vcs_type: str) -> VscAPI:
     if vcs_type == Vcs_type.github.value:
-        return GithubAPIFacade(token = token, organization = organization)
+        return GithubAPI(token = token, organization = organization)
