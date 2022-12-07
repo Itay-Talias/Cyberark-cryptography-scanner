@@ -31,21 +31,19 @@ data = {
                       {"word": "encrypt_at_time", "details": "AES", "key_size": "128 bit"},
                       {"word": "decrypt_at_time", "details": "AES", "key_size": "128 bit"}]
         },
-        "cryptography.hazmat.primitives.asymmetric": {
+        "cryptography.hazmat.primitives.asymmetric.rsa": {
             "category": "encryption/decryption",
-            "words": [{"word": "rsa.generate_private_key", "details": "rsa", "key_size": ""},
-                      {"word": "dsa.generate_private_key", "details": "dsa", "key_size": ""}]
+            "words": [{"word": "generate_private_key", "details": "rsa", "key_size": ""}]
+        },
+        "cryptography.hazmat.primitives.asymmetric.dsa": {
+            "category": "encryption/decryption",
+            "words": [{"word": "generate_private_key", "details": "dsa", "key_size": ""}]
         },
         "cryptography.x509": {
             "category": "signature",
             "words": [{"word": "sign", "details": "", "key_size": ""}]
         },
         "cryptography.hazmat.primitives.asymmetric.dh": {
-            "category": "key exchange",
-            "words": [{"word": "generate_parameters", "details": "", "key_size": ""}]
-
-        },
-        "dh": {
             "category": "key exchange",
             "words": [{"word": "generate_parameters", "details": "", "key_size": ""}]
 
