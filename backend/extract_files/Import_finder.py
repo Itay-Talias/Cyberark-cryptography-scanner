@@ -14,6 +14,9 @@ class Import_finder(ast.NodeVisitor):
         module = node.module
         names = []
         for i in node.names:
-            names.append(f'{module}.{i.name}')
+            if(i.name != "*"):
+                names.append(f'{module}.{i.name}')
+            else:
+                names.append(module)
         self.imports.append(names)
 

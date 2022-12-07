@@ -29,7 +29,8 @@ def file_import_lib(file_context : str) -> set[str]:
     libraries_in_file = set()
     imports = parse_imports(file_context)
     for import_obj in imports:
-        libraries_in_file.add(import_obj)
+        for library in import_obj:
+            libraries_in_file.add(library)
     return libraries_in_file
 
 def parse_imports(source):
