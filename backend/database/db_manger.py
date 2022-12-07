@@ -1,14 +1,10 @@
-from abc import ABC
 from fastapi import status
-
-from constants import constant as consts
 from backend.database.dal import DAL
 from configuration.constants.configuration import *
 import pymysql as mysql
 from typing import List
 from fastapi.responses import JSONResponse
-
-from sql_queries.queries import ADD_LANGUAGE, ADD_LIBRARY
+from backend.database.sql_queries.queries import ADD_LANGUAGE, ADD_LIBRARY
 
 
 class DbManager(DAL):
@@ -52,6 +48,8 @@ class DbManager(DAL):
             return JSONResponse({"Error": e},
                                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+    def get_scan_status(self) -> bool:
+        pass
 
 CONNECTOR = None
 

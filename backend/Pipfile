@@ -10,6 +10,7 @@ fastapi = "*"
 pydentic = "*"
 uvicorn = "*"
 pymysql = "*"
+pydantic = "*"
 
 [dev-packages]
 
