@@ -1,4 +1,4 @@
-from vcs_api.github_api_facade import GithubAPIFacade
+from vcs_api.github_api import GithubAPI
 from data_analyze.libraries.libraries_data import libraries
 from .functions_finder import find_functions
 import ast
