@@ -1,5 +1,5 @@
 from vcs_api.github_api import GithubAPI
-from data_analyze.libraries.libraries_data import libraries
+from database.data.libraries_data import data
 import ast
 from .functoins_finder import Call_finder
 
@@ -13,7 +13,7 @@ def analyze_file(file: object, language: str) -> list[object]:
         algorithm_uses = finder.functions
         file_results = {
             "success": file["success"],
-            "category": libraries[language][library]["category"],
+            "category": data[language][library]["category"],
             "library": library,
             "algorithms": algorithm_uses,
             "url": file["url"],
