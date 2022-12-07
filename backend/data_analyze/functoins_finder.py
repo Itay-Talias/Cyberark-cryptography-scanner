@@ -6,8 +6,8 @@ class Call_finder(ast.NodeVisitor):
         self.functions_words = functions_words
 
     def visit_Call(self, node):
-        if(isinstance(node.func, ast.Attribute)):
-            while(isinstance(node.func.value, ast.Call)):
+        if isinstance(node.func, ast.Attribute):
+            while not hasattr(node.func, "value") and isinstance(node.func.value, ast.Call):
                 node = node.func.value
         if (
                 isinstance(node.func, ast.Attribute)
