@@ -1,0 +1,29 @@
+.login-box {
+    background-color: rgba(246, 247, 251, 0.7);
+    padding: 8px;
+    border-radius: 5px;
+    display: inline-block;
+}
+
+.title-prod {
+    color: rgb(5, 41, 103);
+    margin: 50px !important;
+    font-family: Georgia, serif !important;
+}
+
+.btn-login {
+    margin: 30px !important;
+    width: 100px !important;
+    background-color: rgb(5, 41, 103) !important;
+}
+.btn-login:hover {
+    color: black;
+    background-color: rgb(107, 158, 246) !important;
+}
+.right-box {
+    padding-top: 25%;
+}
+
+.left-box {
+    padding-bottom: 10%;
+}
