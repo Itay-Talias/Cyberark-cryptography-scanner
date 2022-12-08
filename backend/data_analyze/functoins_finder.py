@@ -1,25 +1,30 @@
 import ast
-from database.data.libraries_data import data
 
 class Call_finder(ast.NodeVisitor):
-    def __init__(self, language, library):
+    def __init__(self, functions_words: list[str]):
         self.functions = []
-        self.library = library
-        self.language = language
+        self.functions_words = functions_words
 
     def visit_Call(self, node):
-        if(isinstance(node.func, ast.Attribute)):
-            while(isinstance(node.func.value, ast.Call)):
+        if isinstance(node.func, ast.Attribute):
+            while not hasattr(node.func, "value") and isinstance(node.func.value, ast.Call):
                 node = node.func.value
+        key_size = -1
+        for keyword in node.keywords:
+            if keyword.arg == "key_size":
+                key_size = keyword.value.value
         if (
                 isinstance(node.func, ast.Attribute)
                 and self.is_lib_function(node.func.attr)
         ):
-            self.functions.append({"line-index": node.lineno, "name": node.func.attr})
+            self.adding_function_to_list(node.lineno,node.func.attr,key_size)
         elif (isinstance(node.func, ast.Name)
               and self.is_lib_function(node.func.id)):
-            self.functions.append({"line-index": node.lineno, "name": node.func.id})
+            self.adding_function_to_list(node.lineno,node.func.id,key_size)
 
-    def is_lib_function(self,func: str) -> bool:
-        functions_list = data[self.language][self.library]["words"]
-        return func in functions_list
+    def is_lib_function(self, func: str) -> bool:
+        return func in self.functions_words
+
+    def adding_function_to_list(self, line: str, name:str, key_size:int):
+        self.functions.append({"line-index": line, "name": name, "key_size": key_size})
+

@@ -20,8 +20,8 @@ data = {
         },
         "bcrypt": {
             "category": "hash",
-            "words": [{"hashpw": "sha1", "details": "", "key_size": "n/a"},
-                      {"kdf": "sha224", "details": "", "key_size": "n/a"}]
+            "words": [{"word": "hashpw", "details": "", "key_size": "n/a"},
+                      {"word": "kdf", "details": "", "key_size": "n/a"}]
         },
         "cryptography.fernet.Fernet": {
             "category": "encryption/decryption",

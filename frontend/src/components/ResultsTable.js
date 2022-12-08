@@ -18,27 +18,27 @@ import { ResultsContext } from "../App";
 import LinearProgress from "@mui/material/LinearProgress";
 
 function createData(results) {
-    console.log(results);
+    console.log(results)
     const rows =
         results.length > 0
             ? results.map((file) => {
-                  return file["algorithms"].length > 0
-                      ? file["algorithms"].map((row) => {
-                            return {
-                                algorithm: row["algorithm"],
-                                library: file["library"],
-                                keyLength: 0,
-                                url: file["url"],
-                                repo: file["location"]["repo"],
-                                path: file["location"]["path"],
-                                line: row["line_index"],
-                                category: file["category"],
-                            };
-                        })
-                      : [];
-              })
+            if ((file["success"]) && (file["algorithms"].length > 0)){
+                  return file["algorithms"].map((line, index) => {
+                      return {
+                          category: file["category"],
+                          library: file["library"],
+                          repo: file["location"]["repo"],
+                          path: file["location"]["path"],
+                          algorithm: file["algorithms"][index]["word"],
+                          keyLength: file["algorithms"][index]["key_size"],
+                          line: file["algorithms"][index]["line_index"],
+
+                      };
+                  });
+              }})
             : [];
-    const res = rows.flat(1);
+    const res = rows.flat(1).filter(element => {return element !== undefined;});
+    console.log(res)
     return res;
 }
 
@@ -132,8 +132,10 @@ function EnhancedTableHead(props) {
 
     return (
         <TableHead>
-            <TableRow>
-                <TableCell></TableCell>
+            <TableRow >
+                <TableCell >
+
+                </TableCell>
                 {headCells.map((headCell) => (
                     <TableCell
                         key={headCell.id}

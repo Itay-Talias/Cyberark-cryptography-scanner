@@ -10,17 +10,20 @@ from extract_files.extract_by_libraries import extract_by_libraries_ast
 from data_analyze.analyze_engine import analyze_all_files
 from database import mongo_db_manager
 from typing import Union
+from database.dal_mongo import get_db_connector
+from database.data.libraries_data import data
 
 app = FastAPI()
 
 PYTHON = "python"
+DAL = get_db_connector(data)
 
 
 def scan(_id, result):
     org = create_vcs_connector(token=result["token"], organization=result["organization"],
                                vcs_type=result["vcs_type"])
-    files = extract_by_libraries_ast(org.get_files_from_organization(), ["hashlib", "bcrypt"])
-    results = analyze_all_files(files, PYTHON)
+    files = extract_by_libraries_ast(org.get_files_from_organization(), DAL.get_libraries_names(PYTHON))
+    results = analyze_all_files(files, PYTHON, DAL)
     mongo_db_manager.add_results(_id, results)
 
 
@@ -50,7 +53,6 @@ async def get_results(id: Union[str, None] = Cookie(default=None)):
         return JSONResponse({"Error": str(error)}, status_code=status.HTTP_400_BAD_REQUEST)
     except TypeError as error:
         return JSONResponse({"Error": str(error)}, status_code=status.HTTP_400_BAD_REQUEST)
-
 
 
 origins = [
