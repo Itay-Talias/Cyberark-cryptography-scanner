@@ -16,8 +16,7 @@ export default function Results() {
                         width: 200,
                     }}
                     alt="cyberark logo"
-                    src="https://images.g2crowd.com/uploads/product/image/social_landscape/social_landscape_a1ff161ba2b69dfe821e2c53d0e3b958/cyberark-privileged-access-manager.png
-                    "
+                    src="https://www.cyberark.com/wp-content/uploads/2021/01/cyberark-logo-dark.svg"
                 />
                 <Typography variant="h3" gutterBottom className="title-result">
                     Cryptography Scanner

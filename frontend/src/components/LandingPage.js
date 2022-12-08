@@ -32,14 +32,13 @@ export default function LandingPage() {
                         component="img"
                         sx={{
                             height: 220,
-                            width: 470,
+                            width: 870,
                         }}
                         alt="cyberark logo"
-                        src="https://images.g2crowd.com/uploads/product/image/social_landscape/social_landscape_a1ff161ba2b69dfe821e2c53d0e3b958/cyberark-privileged-access-manager.png
-                    "
+                        src="https://www.cyberark.com/wp-content/uploads/2021/01/cyberark-logo-dark.svg"
                     />
                     <Typography
-                        variant="h2"
+                        variant="h1"
                         gutterBottom
                         className="title-prod"
                     >

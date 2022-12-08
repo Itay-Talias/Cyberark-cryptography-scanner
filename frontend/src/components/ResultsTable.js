@@ -274,7 +274,7 @@ export default function EnhancedTable() {
 
     return (
         <Box sx={{ width: "80%" }}>
-            <Paper sx={{ width: "100%", mb: 2 }}>
+            <Paper sx={{ width: "100%", mb: 2}}>
                 <TableContainer>
                     <Table
                         sx={{ minWidth: 750 }}
