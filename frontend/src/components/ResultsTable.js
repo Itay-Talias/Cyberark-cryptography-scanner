@@ -16,6 +16,7 @@ import Switch from "@mui/material/Switch";
 import { visuallyHidden } from "@mui/utils";
 import { ResultsContext } from "../App";
 import LinearProgress from "@mui/material/LinearProgress";
+import Link from '@mui/material/Link';
 
 function createData(results) {
     const rows =
@@ -31,13 +32,40 @@ function createData(results) {
                           algorithm: file["algorithms"][index]["word"],
                           keyLength: file["algorithms"][index]["key_size"],
                           line: file["algorithms"][index]["line_index"],
-
+                          scanStatus: "success",
+                          url: file["url"].concat("#L", file["algorithms"][index]["line_index"])
                       };
                   });
-              }})
+             }
+            else if(!(file["success"])){
+                   return {
+                          category: "n/a",
+                          library: "n/a",
+                          repo: file["location"]["repo"],
+                          path: file["location"]["path"],
+                          algorithm: "n/a",
+                          keyLength: "n/a",
+                          line: "n/a",
+                          scanStatus: "failed",
+                          url: file["url"]
+                      };
+             }
+            else if((file["algorithms"].length == 0)){
+                   return {
+                          category: file["category"],
+                          library: file["library"],
+                          repo: file["location"]["repo"],
+                          path: file["location"]["path"],
+                          algorithm: "None",
+                          keyLength: "n/a",
+                          line: "n/a",
+                          scanStatus: "success",
+                          url: file["url"]
+                      };
+             }
+             })
             : [];
     const res = rows.flat(1).filter(element => {return element !== undefined;});
-    console.log(res)
     return res;
 }
 
@@ -94,7 +122,7 @@ const headCells = [
         id: "repo",
         numeric: false,
         disablePadding: false,
-        label: "Repo",
+        label: "Repository",
     },
     {
         id: "path",
@@ -114,6 +142,18 @@ const headCells = [
         disablePadding: false,
         label: "Category",
     },
+    {
+        id: "scanStatus",
+        numeric: false,
+        disablePadding: false,
+        label: "Scan status",
+    },
+    {
+        id: "url",
+        numeric: false,
+        disablePadding: false,
+        label: "Link",
+    },
 ];
 
 function EnhancedTableHead(props) {
@@ -131,10 +171,7 @@ function EnhancedTableHead(props) {
 
     return (
         <TableHead>
-            <TableRow >
-                <TableCell >
-
-                </TableCell>
+            <TableRow>
                 {headCells.map((headCell) => (
                     <TableCell
                         key={headCell.id}
@@ -178,7 +215,7 @@ export default function EnhancedTable() {
     const [selected, setSelected] = React.useState([]);
     const [page, setPage] = React.useState(0);
     const [dense, setDense] = React.useState(false);
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const [rowsPerPage, setRowsPerPage] = React.useState(15);
     const { results, setResults } = React.useContext(ResultsContext);
     const rows = createData(results);
     const handleRequestSort = (event, property) => {
@@ -221,7 +258,7 @@ export default function EnhancedTable() {
     };
 
     const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
+        setRowsPerPage(parseInt(event.target.value, 25));
         setPage(0);
     };
 
@@ -268,27 +305,7 @@ export default function EnhancedTable() {
                                         const labelId = `enhanced-table-checkbox-${index}`;
 
                                         return (
-                                            <TableRow
-                                                hover
-                                                onClick={(event) =>
-                                                    handleClick(event, row.name)
-                                                }
-                                                role="checkbox"
-                                                aria-checked={isItemSelected}
-                                                tabIndex={-1}
-                                                key={row.name}
-                                                selected={isItemSelected}
-                                            >
-                                                <TableCell padding="checkbox">
-                                                    <Checkbox
-                                                        color="primary"
-                                                        checked={isItemSelected}
-                                                        inputProps={{
-                                                            "aria-labelledby":
-                                                                labelId,
-                                                        }}
-                                                    />
-                                                </TableCell>
+                                            <TableRow>
                                                 <TableCell
                                                     component="th"
                                                     id={labelId}
@@ -300,7 +317,7 @@ export default function EnhancedTable() {
                                                 <TableCell align="left">
                                                     {row.library}
                                                 </TableCell>
-                                                <TableCell align="center">
+                                                <TableCell align="left">
                                                     {row.keyLength}
                                                 </TableCell>
                                                 <TableCell align="left">
@@ -314,6 +331,13 @@ export default function EnhancedTable() {
                                                 </TableCell>
                                                 <TableCell align="left">
                                                     {row.category}
+                                                </TableCell>
+                                                <TableCell align="left">
+                                                    {row.scanStatus}
+                                                </TableCell>
+                                                <TableCell align="left">
+                                                    <Link target="_blank" href= {row.url} underline="always"> &#129157;
+                                                    </Link>
                                                 </TableCell>
                                             </TableRow>
                                         );
@@ -339,7 +363,7 @@ export default function EnhancedTable() {
                     </Table>
                 </TableContainer>
                 <TablePagination
-                    rowsPerPageOptions={[5, 10, 25]}
+                    rowsPerPageOptions={[15, 25, 35]}
                     component="div"
                     count={rows.length}
                     rowsPerPage={rowsPerPage}
@@ -348,12 +372,7 @@ export default function EnhancedTable() {
                     onRowsPerPageChange={handleChangeRowsPerPage}
                 />
             </Paper>
-            <FormControlLabel
-                control={
-                    <Switch checked={dense} onChange={handleChangeDense} />
-                }
-                label="Dense padding"
-            />
+
         </Box>
     );
 }
