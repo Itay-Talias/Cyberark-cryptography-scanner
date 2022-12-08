@@ -13,8 +13,6 @@ class Call_finder(ast.NodeVisitor):
         for keyword in node.keywords:
             if keyword.arg == "key_size":
                 key_size = keyword.value.value
-            # elif isinstance(keyword.value,ast.Call):
-            #     self.visit(keyword.value)
         if (
                 isinstance(node.func, ast.Attribute)
                 and self.is_lib_function(node.func.attr)
@@ -23,9 +21,6 @@ class Call_finder(ast.NodeVisitor):
         elif (isinstance(node.func, ast.Name)
               and self.is_lib_function(node.func.id)):
             self.adding_function_to_list(node.lineno,node.func.id,key_size)
-        # for arg in node.args:
-        #     if isinstance(arg, ast.Call):
-        #         self.visit(arg)
 
 
     def is_lib_function(self, func: str) -> bool:
