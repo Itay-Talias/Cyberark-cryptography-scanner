@@ -18,8 +18,6 @@ import { ResultsContext } from "../App";
 import LinearProgress from "@mui/material/LinearProgress";
 
 function createData(results) {
-    console.log(results)
-
     const rows =
         results.length > 0
             ? results.map((file) => {

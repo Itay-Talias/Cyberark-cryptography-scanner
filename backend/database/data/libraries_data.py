@@ -45,9 +45,7 @@ data = {
         },
         "cryptography.hazmat.primitives.asymmetric.dh": {
             "category": "key exchange",
-            "words": [{"word": "generate_parameters", "details": "", "key_size": ""},
-                      {"word": "generate_private_key", "details": "", "key_size": ""},
-                      {"word": "public_key", "details": "", "key_size": ""}]
+            "words": [{"word": "generate_parameters", "details": "", "key_size": ""}]
 
         },
         "cryptography.hazmat.primitives.hashes": {
