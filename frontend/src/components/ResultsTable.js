@@ -17,30 +17,30 @@ import { visuallyHidden } from "@mui/utils";
 import { ResultsContext } from "../App";
 import LinearProgress from "@mui/material/LinearProgress";
 
-function createData(results) {
-    console.log(results)
-    const rows =
-        results.length > 0
-            ? results.map((file) => {
-            if ((file["success"]) && (file["algorithms"].length > 0)){
-                  return file["algorithms"].map((line, index) => {
-                      return {
-                          category: file["category"],
-                          library: file["library"],
-                          repo: file["location"]["repo"],
-                          path: file["location"]["path"],
-                          algorithm: file["algorithms"][index]["word"],
-                          keyLength: file["algorithms"][index]["key_size"],
-                          line: file["algorithms"][index]["line_index"],
+// function createData(results) {
+//     console.log(results)
+//     const rows =
+//         results.length > 0
+//             ? results.map((file) => {
+//             if ((file["success"]) && (file["algorithms"].length > 0)){
+//                   return file["algorithms"].map((line, index) => {
+//                       return {
+//                           category: file["category"],
+//                           library: file["library"],
+//                           repo: file["location"]["repo"],
+//                           path: file["location"]["path"],
+//                           algorithm: file["algorithms"][index]["word"],
+//                           keyLength: file["algorithms"][index]["key_size"],
+//                           line: file["algorithms"][index]["line_index"],
 
-                      };
-                  });
-              }})
-            : [];
-    const res = rows.flat(1).filter(element => {return element !== undefined;});
-    console.log(res)
-    return res;
-}
+//                       };
+//                   });
+//               }})
+//             : [];
+//     const res = rows.flat(1).filter(element => {return element !== undefined;});
+//     console.log(res)
+//     return res;
+// }
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -132,10 +132,8 @@ function EnhancedTableHead(props) {
 
     return (
         <TableHead>
-            <TableRow >
-                <TableCell >
-
-                </TableCell>
+            <TableRow>
+                <TableCell></TableCell>
                 {headCells.map((headCell) => (
                     <TableCell
                         key={headCell.id}
@@ -173,7 +171,7 @@ EnhancedTableHead.propTypes = {
     rowCount: PropTypes.number.isRequired,
 };
 
-export default function EnhancedTable() {
+export default function EnhancedTable({ rows }) {
     const [order, setOrder] = React.useState("asc");
     const [orderBy, setOrderBy] = React.useState("calories");
     const [selected, setSelected] = React.useState([]);
@@ -181,7 +179,7 @@ export default function EnhancedTable() {
     const [dense, setDense] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const { results, setResults } = React.useContext(ResultsContext);
-    const rows = createData(results);
+
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === "asc";
         setOrder(isAsc ? "desc" : "asc");
