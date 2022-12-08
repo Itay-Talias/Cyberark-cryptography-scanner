@@ -42,5 +42,5 @@ def analyze_all_files(files, language: str, connector: DALMongoDB):
 def create_algorithm_details(language: str, library: str, algorithm: object, connector: DALMongoDB):
     details = {**connector.get_function_details(language, library, algorithm["name"]), "line-index": algorithm["line-index"]}
     if algorithm["key_size"] != -1:
-        details["ket_size"] = f'{algorithm["key_size"]} bit'
+        details["key_size"] = f'{algorithm["key_size"]} bit'
     return details
