@@ -19,24 +19,27 @@ import LinearProgress from "@mui/material/LinearProgress";
 
 function createData(results) {
     console.log(results)
+
     const rows =
         results.length > 0
-            ? results.map((arr) => {
-                  return arr.map((row) => {
+            ? results.map((file) => {
+            if ((file["success"]) && (file["algorithms"].length > 0)){
+                  return file["algorithms"].map((line, index) => {
                       return {
-                          algorithm: row["algorithm"],
-                          library: row["library"],
-                          keyLength: 0,
-                          repo: row["location"]["repo"],
-                          path: row["location"]["path"],
-                          line: row["location"]["line_index"],
-                          //   location: `${row["location"]["repo"]} ${row["location"]["path"]} line ${row["location"]["line_index"]}`,
-                          category: row["category"],
+                          category: file["category"],
+                          library: file["library"],
+                          repo: file["location"]["repo"],
+                          path: file["location"]["path"],
+                          algorithm: file["algorithms"][index]["word"],
+                          keyLength: file["algorithms"][index]["key_size"],
+                          line: file["algorithms"][index]["line_index"],
+
                       };
                   });
-              })
+              }})
             : [];
-    const res = rows.flat(1);
+    const res = rows.flat(1).filter(element => {return element !== undefined;});
+    console.log(res)
     return res;
 }
 
