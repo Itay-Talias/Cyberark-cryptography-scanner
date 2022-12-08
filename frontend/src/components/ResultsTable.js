@@ -18,22 +18,24 @@ import { ResultsContext } from "../App";
 import LinearProgress from "@mui/material/LinearProgress";
 
 function createData(results) {
-    console.log(results)
+    console.log(results);
     const rows =
         results.length > 0
-            ? results.map((arr) => {
-                  return arr.map((row) => {
-                      return {
-                          algorithm: row["algorithm"],
-                          library: row["library"],
-                          keyLength: 0,
-                          repo: row["location"]["repo"],
-                          path: row["location"]["path"],
-                          line: row["location"]["line_index"],
-                          //   location: `${row["location"]["repo"]} ${row["location"]["path"]} line ${row["location"]["line_index"]}`,
-                          category: row["category"],
-                      };
-                  });
+            ? results.map((file) => {
+                  return file["algorithms"].length > 0
+                      ? file["algorithms"].map((row) => {
+                            return {
+                                algorithm: row["algorithm"],
+                                library: file["library"],
+                                keyLength: 0,
+                                url: file["url"],
+                                repo: file["location"]["repo"],
+                                path: file["location"]["path"],
+                                line: row["line_index"],
+                                category: file["category"],
+                            };
+                        })
+                      : [];
               })
             : [];
     const res = rows.flat(1);
@@ -130,10 +132,8 @@ function EnhancedTableHead(props) {
 
     return (
         <TableHead>
-            <TableRow >
-                <TableCell >
-
-                </TableCell>
+            <TableRow>
+                <TableCell></TableCell>
                 {headCells.map((headCell) => (
                     <TableCell
                         key={headCell.id}

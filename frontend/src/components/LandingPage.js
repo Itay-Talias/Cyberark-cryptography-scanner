@@ -6,19 +6,23 @@ import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import { useState } from "react";
 import { CryptographyScannerApi } from "../api/CryptographyScannerApi";
-import { ResultsContext } from "../App";
+import { UserIdContext } from "../App";
 import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 export default function LandingPage() {
     const [organization, setOrganization] = useState("");
     const [token, setToken] = useState("");
-    const { results, setResults } = React.useContext(ResultsContext);
+    const [cookies, setCookie] = useCookies(["id"]);
+    const { userId, setUserId } = React.useContext(UserIdContext);
     const navigate = useNavigate();
+
     function handleSubmit() {
         CryptographyScannerApi()
             .scan(organization, token)
             .then((res) => {
-                setResults(res.data);
+                console.log("handleSubmit", res.data);
+                setUserId(res.data.id);
             });
         navigate("/results");
     }
@@ -27,16 +31,16 @@ export default function LandingPage() {
         <Grid container alignItems="center" justifyContent="center">
             <Grid item>
                 <Box
-                component="img"
-                sx={{
-                  height: 200,
-                  width: 200,
-                  maxHeight: { xs: 200, md: 200 },
-                  maxWidth: { xs: 200, md: 200 },
-                }}
-                alt="cyberark logo"
-                src="https://avatars.githubusercontent.com/u/30869256?s=280&v=4"
-              />
+                    component="img"
+                    sx={{
+                        height: 200,
+                        width: 200,
+                        maxHeight: { xs: 200, md: 200 },
+                        maxWidth: { xs: 200, md: 200 },
+                    }}
+                    alt="cyberark logo"
+                    src="https://avatars.githubusercontent.com/u/30869256?s=280&v=4"
+                />
                 <Typography variant="h3" gutterBottom>
                     CyberArk Cryptography Scanner
                 </Typography>

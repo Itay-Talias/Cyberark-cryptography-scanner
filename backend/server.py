@@ -1,31 +1,56 @@
-from fastapi import FastAPI, status, Request
+import uuid
+from threading import Thread
+from fastapi import FastAPI, status, Request, Cookie
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 from fastapi.responses import JSONResponse
-import json
 from error_handler import error_handler
 from vcs_api.vcs_factory import create_vcs_connector
 from extract_files.extract_by_libraries import extract_by_libraries_ast
 from data_analyze.analyze_engine import analyze_all_files
+from database import mongo_db_manager
+from typing import Union
 
 app = FastAPI()
 
 PYTHON = "python"
 
 
-@app.post("/files", status_code=status.HTTP_201_CREATED)
-async def get_files(request: Request):
+def scan(_id, result):
+    org = create_vcs_connector(token=result["token"], organization=result["organization"],
+                               vcs_type=result["vcs_type"])
+    files = extract_by_libraries_ast(org.get_files_from_organization(), ["hashlib", "bcrypt"])
+    results = analyze_all_files(files, PYTHON)
+    mongo_db_manager.add_results(_id, results)
+
+
+@app.post("/scan", status_code=status.HTTP_201_CREATED)
+async def start_scan(request: Request):
     try:
         result: dict = await request.json()
         error_handler.post_request(client_data=result)
-        org = create_vcs_connector(token=result["token"], organization=result["organization"],
-                                   vcs_type=result["vcs_type"])
-        files = extract_by_libraries_ast(org.get_files_from_organization(), ["hashlib","bcrypt"])
-        return analyze_all_files(files, PYTHON)
+        _id = uuid.uuid1()
+        tread = Thread(target=scan, args=(_id, result))
+        tread.start()
+        response = JSONResponse(content={"id": str(_id)})
+        response.set_cookie(key="id", value=_id)
+        return response
     except ValueError as error:
         return JSONResponse({"Error": str(error)}, status_code=status.HTTP_400_BAD_REQUEST)
     except TypeError as error:
         return JSONResponse({"Error": str(error)}, status_code=status.HTTP_400_BAD_REQUEST)
+
+
+@app.get("/results", status_code=status.HTTP_200_OK)
+async def get_results(id: Union[str, None] = Cookie(default=None)):
+    try:
+        print(id)
+        return mongo_db_manager.get_results(id)
+    except ValueError as error:
+        return JSONResponse({"Error": str(error)}, status_code=status.HTTP_400_BAD_REQUEST)
+    except TypeError as error:
+        return JSONResponse({"Error": str(error)}, status_code=status.HTTP_400_BAD_REQUEST)
+
 
 
 origins = [
