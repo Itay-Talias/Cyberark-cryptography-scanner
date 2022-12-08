@@ -9,8 +9,7 @@ def analyze_file(file: object, language: str, library: str, connector: DALMongoD
     context = GithubAPI.get_context_from_file(file["file"])
     tree = ast.parse(context, mode='exec')
     finder = Call_finder(connector.get_functions_words_from_libraries(language, library))
-    # finder.visit(tree)
-    visit_tree(tree,finder)
+    visit_tree(tree, finder)
     algorithm_uses = finder.functions
     algorithm_uses = list(map(lambda a: create_algorithm_details(language, library, a, connector), algorithm_uses))
     file_results = {
@@ -81,6 +80,22 @@ def visit_tree(tree, finder):
     elif isinstance(tree,ast.With):
         for node in tree.body:
             visit_tree(node, finder)
+    elif isinstance(tree, ast.While):
+        for node in tree.body:
+            visit_tree(node, finder)
+        visit_tree(tree.test, finder)
+    elif isinstance(tree, ast.If):
+        for node in tree.body:
+            visit_tree(node, finder)
+        visit_tree(tree.test, finder)
+    elif isinstance(tree, ast.With):
+        for node in tree.body:
+            visit_tree(node, finder)
+        for node in tree.items:
+            visit_tree(node, finder)
+    elif isinstance(tree,ast.withitem):
+        visit_tree(tree.context_expr, finder)
+        visit_tree(tree.optional_vars, finder)
     elif isinstance(tree, ast.Call):
         finder.visit(tree)
         for arg in tree.args:
@@ -88,7 +103,7 @@ def visit_tree(tree, finder):
                 visit_tree(arg, finder)
         visit_tree(tree.func, finder)
         for keyword in tree.keywords:
-            if isinstance(keyword.value,ast.Call):
+            if isinstance(keyword.value, ast.Call):
                 visit_tree(keyword.value, finder)
     else:
         finder.visit(tree)

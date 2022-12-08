@@ -132,8 +132,10 @@ function EnhancedTableHead(props) {
 
     return (
         <TableHead>
-            <TableRow>
-                <TableCell></TableCell>
+            <TableRow >
+                <TableCell >
+
+                </TableCell>
                 {headCells.map((headCell) => (
                     <TableCell
                         key={headCell.id}
@@ -171,7 +173,7 @@ EnhancedTableHead.propTypes = {
     rowCount: PropTypes.number.isRequired,
 };
 
-export default function EnhancedTable({ rows }) {
+export default function EnhancedTable() {
     const [order, setOrder] = React.useState("asc");
     const [orderBy, setOrderBy] = React.useState("calories");
     const [selected, setSelected] = React.useState([]);
@@ -179,7 +181,7 @@ export default function EnhancedTable({ rows }) {
     const [dense, setDense] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const { results, setResults } = React.useContext(ResultsContext);
-
+    const rows = createData(results);
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === "asc";
         setOrder(isAsc ? "desc" : "asc");
