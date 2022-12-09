@@ -31,6 +31,8 @@ function createData(results) {
     });
     return res;
 }
+import Box from "@mui/material/Box";
+import "../style/Results.css";
 
 export default function Results() {
     const [rows, setRows] = useState([]);
@@ -59,16 +61,14 @@ export default function Results() {
                 <Box
                     component="img"
                     sx={{
-                        height: 200,
+                        height: 100,
                         width: 200,
-                        maxHeight: { xs: 200, md: 200 },
-                        maxWidth: { xs: 200, md: 200 },
                     }}
                     alt="cyberark logo"
-                    src="https://avatars.githubusercontent.com/u/30869256?s=280&v=4"
+                    src="https://www.cyberark.com/wp-content/uploads/2021/01/cyberark-logo-dark.svg"
                 />
-                <Typography variant="h3" gutterBottom>
-                    CyberArk Cryptography Scanner
+                <Typography variant="h3" gutterBottom className="title-result">
+                    Cryptography Scanner
                 </Typography>
             </Grid>
             <EnhancedTable rows={rows}></EnhancedTable>

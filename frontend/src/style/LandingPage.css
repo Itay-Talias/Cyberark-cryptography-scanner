@@ -1,0 +1,107 @@
+.login-box {
+    /*background-color: rgba(242, 250, 253, 0.9);*/
+    padding: 15px;
+    border-radius: 50px;
+    display: inline-block;
+    border-style:solid;
+    border-color: #1e427a;
+    border-width: thin;
+}
+
+.title-prod {
+    background: linear-gradient(to right, #1199d4 , #1e427a);
+    color: rgb(5, 41, 103);
+    margin: 50px !important;
+    font-family: roboto-condensed, sans-serif !important;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 60px;
+}
+.right-box {
+    padding-top: 25%;
+}
+
+.left-box {
+    padding-bottom: 10%;
+}
+
+img{
+    padding-top:5%;
+    padding-left:5%;
+}
+
+.btn-login {
+    margin: 30px !important;
+    width: 120px !important;
+    height: 50px !important;
+    background-color: #1e427a !important;
+}
+
+.btn-login:hover {
+    color: black;
+    background-color: #1199d4 !important;
+}
+
+/* CSS */
+.btn-login {
+  padding: 0.6em 2em;
+  border: none;
+  outline: none;
+  color: rgb(255, 255, 255);
+  background: #111;
+  cursor: pointer;
+  position: relative;
+  z-index: 0;
+  border-radius: 10px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.btn-login:before {
+  content: "";
+  background: linear-gradient(
+    45deg,
+    #1199d4 , #1e427a,#1199d4 , #1e427a,#1199d4 , #1e427a,#1199d4 , #1e427a
+  );
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  background-size: 400%;
+  z-index: -1;
+  filter: blur(5px);
+  -webkit-filter: blur(5px);
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  animation: glowing-button-85 20s linear infinite;
+  transition: opacity 0.3s ease-in-out;
+  border-radius: 10px;
+}
+
+@keyframes glowing-button-85 {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 400% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
+.btn-login:after {
+  z-index: -1;
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #222;
+  left: 0;
+  top: 0;
+  border-radius: 10px;
+}
+
+

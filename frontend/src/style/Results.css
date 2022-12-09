@@ -1,0 +1,11 @@
+
+.title-result {
+    background: linear-gradient(to right, #1199d4 , #1e427a);
+    color: rgb(5, 41, 103);
+    font-family: roboto-condensed, sans-serif !important;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 50px;
+}
