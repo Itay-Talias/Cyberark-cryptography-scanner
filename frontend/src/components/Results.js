@@ -8,7 +8,6 @@ import { CryptographyScannerApi } from "../api/CryptographyScannerApi";
 import { useEffect, useState } from "react";
 
 function createData(results) {
-    console.log(results);
     const rows =
         results.length > 0
             ? results.map((file) => {
@@ -30,22 +29,19 @@ function createData(results) {
     const res = rows.flat(1).filter((element) => {
         return element !== undefined;
     });
-    console.log(res);
     return res;
 }
 
 export default function Results() {
     const [rows, setRows] = useState([]);
-    const { userId, setUserId } = React.useContext(UserIdContext);
     const { results, setResults } = React.useContext(ResultsContext);
 
     const getResults = () => {
-        console.log("in get results");
+        const scan_id = localStorage.getItem("scan_id");
         CryptographyScannerApi()
-            .getResults(userId)
+            .getResults(scan_id)
             .then((res) => {
-                console.log("in get results", res.data.results);
-                if (res.data !== null) {
+                if (res?.data?.results) {
                     setResults(res.data.results);
                     setRows(createData(res.data.results));
                 } else {
@@ -56,7 +52,6 @@ export default function Results() {
     useEffect(() => {
         getResults();
     }, []);
-    useEffect(() => {}, [results]);
 
     return (
         <Grid container alignItems="center" justifyContent="center">

@@ -36,7 +36,6 @@ async def start_scan(request: Request):
         tread = Thread(target=scan, args=(_id, result))
         tread.start()
         response = JSONResponse(content={"id": str(_id)})
-        response.set_cookie(key="id", value=_id)
         return response
     except ValueError as error:
         return JSONResponse({"Error": str(error)}, status_code=status.HTTP_400_BAD_REQUEST)
@@ -45,10 +44,9 @@ async def start_scan(request: Request):
 
 
 @app.get("/results", status_code=status.HTTP_200_OK)
-async def get_results(id: Union[str, None] = Cookie(default=None)):
+async def get_results(scan_id):
     try:
-        print(id)
-        return mongo_db_manager.get_results(id)
+        return mongo_db_manager.get_results(scan_id)
     except ValueError as error:
         return JSONResponse({"Error": str(error)}, status_code=status.HTTP_400_BAD_REQUEST)
     except TypeError as error:
