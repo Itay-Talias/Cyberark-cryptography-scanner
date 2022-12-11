@@ -75,7 +75,7 @@ export default function Results() {
                     setResults(res.data.results);
                     setRows(createData(res.data.results));
                 } else {
-                    setInterval(getResults, 3000);
+                    setTimeout(getResults, 3000);
                 }
             });
     };

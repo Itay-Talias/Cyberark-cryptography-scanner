@@ -16,6 +16,7 @@ import Switch from "@mui/material/Switch";
 import { visuallyHidden } from "@mui/utils";
 import LinearProgress from "@mui/material/LinearProgress";
 import Link from "@mui/material/Link";
+import "../style/ResultsTable.css";
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -118,8 +119,8 @@ function EnhancedTableHead(props) {
     };
 
     return (
-        <TableHead>
-            <TableRow>
+        <TableHead >
+            <TableRow className = "head-cells">
                 {headCells.map((headCell) => (
                     <TableCell
                         key={headCell.id}
