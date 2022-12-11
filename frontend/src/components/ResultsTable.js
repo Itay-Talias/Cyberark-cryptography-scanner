@@ -18,6 +18,7 @@ import Link from "@mui/material/Link";
 import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined";
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
 import { green, red } from "@mui/material/colors";
+import "../style/ResultsTable.css";
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -120,8 +121,8 @@ function EnhancedTableHead(props) {
     };
 
     return (
-        <TableHead>
-            <TableRow>
+        <TableHead >
+            <TableRow className = "head-cells">
                 {headCells.map((headCell) => (
                     <TableCell
                         key={headCell.id}
@@ -165,7 +166,7 @@ export default function EnhancedTable({ rows }) {
     const [selected, setSelected] = React.useState([]);
     const [page, setPage] = React.useState(0);
     const [dense, setDense] = React.useState(false);
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const [rowsPerPage, setRowsPerPage] = React.useState(15);
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === "asc";
         setOrder(isAsc ? "desc" : "asc");
@@ -186,7 +187,6 @@ export default function EnhancedTable({ rows }) {
     };
 
     const handleChangeRowsPerPage = (event) => {
-        console.log(event.target.value);
         setRowsPerPage(parseInt(event.target.value, 25));
         setPage(0);
     };
