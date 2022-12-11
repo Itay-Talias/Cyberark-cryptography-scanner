@@ -14,60 +14,8 @@ import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 import { visuallyHidden } from "@mui/utils";
-import { ResultsContext } from "../App";
 import LinearProgress from "@mui/material/LinearProgress";
-import Link from '@mui/material/Link';
-
-function createData(results) {
-    const rows =
-        results.length > 0
-            ? results.map((file) => {
-            if ((file["success"]) && (file["algorithms"].length > 0)){
-                  return file["algorithms"].map((line, index) => {
-                      return {
-                          category: file["category"],
-                          library: file["library"],
-                          repo: file["location"]["repo"],
-                          path: file["location"]["path"],
-                          algorithm: file["algorithms"][index]["word"],
-                          keyLength: file["algorithms"][index]["key_size"],
-                          line: file["algorithms"][index]["line_index"],
-                          scanStatus: "success",
-                          url: file["url"].concat("#L", file["algorithms"][index]["line_index"])
-                      };
-                  });
-             }
-            else if(!(file["success"])){
-                   return {
-                          category: "n/a",
-                          library: "n/a",
-                          repo: file["location"]["repo"],
-                          path: file["location"]["path"],
-                          algorithm: "n/a",
-                          keyLength: "n/a",
-                          line: "n/a",
-                          scanStatus: "failed",
-                          url: file["url"]
-                      };
-             }
-            else if((file["algorithms"].length == 0)){
-                   return {
-                          category: file["category"],
-                          library: file["library"],
-                          repo: file["location"]["repo"],
-                          path: file["location"]["path"],
-                          algorithm: "None",
-                          keyLength: "n/a",
-                          line: "n/a",
-                          scanStatus: "success",
-                          url: file["url"]
-                      };
-             }
-             })
-            : [];
-    const res = rows.flat(1).filter(element => {return element !== undefined;});
-    return res;
-}
+import Link from "@mui/material/Link";
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -209,15 +157,13 @@ EnhancedTableHead.propTypes = {
     rowCount: PropTypes.number.isRequired,
 };
 
-export default function EnhancedTable() {
+export default function EnhancedTable({ rows }) {
     const [order, setOrder] = React.useState("asc");
     const [orderBy, setOrderBy] = React.useState("calories");
     const [selected, setSelected] = React.useState([]);
     const [page, setPage] = React.useState(0);
     const [dense, setDense] = React.useState(false);
-    const [rowsPerPage, setRowsPerPage] = React.useState(15);
-    const { results, setResults } = React.useContext(ResultsContext);
-    const rows = createData(results);
+    const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === "asc";
         setOrder(isAsc ? "desc" : "asc");
@@ -258,6 +204,7 @@ export default function EnhancedTable() {
     };
 
     const handleChangeRowsPerPage = (event) => {
+        console.log(event.target.value);
         setRowsPerPage(parseInt(event.target.value, 25));
         setPage(0);
     };
@@ -273,8 +220,8 @@ export default function EnhancedTable() {
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
     return (
-        <Box sx={{ width: "80%" }}>
-            <Paper sx={{ width: "100%", mb: 2}}>
+        <Box sx={{ width: "85%" }}>
+            <Paper sx={{ width: "100%", mb: 2 }}>
                 <TableContainer>
                     <Table
                         sx={{ minWidth: 750 }}
@@ -336,7 +283,13 @@ export default function EnhancedTable() {
                                                     {row.scanStatus}
                                                 </TableCell>
                                                 <TableCell align="left">
-                                                    <Link target="_blank" href= {row.url} underline="always"> &#129157;
+                                                    <Link
+                                                        target="_blank"
+                                                        href={row.url}
+                                                        underline="always"
+                                                    >
+                                                        {" "}
+                                                        &#129157;
                                                     </Link>
                                                 </TableCell>
                                             </TableRow>
@@ -372,7 +325,12 @@ export default function EnhancedTable() {
                     onRowsPerPageChange={handleChangeRowsPerPage}
                 />
             </Paper>
-
+            <FormControlLabel
+                control={
+                    <Switch checked={dense} onChange={handleChangeDense} />
+                }
+                label="Dense padding"
+            />
         </Box>
     );
 }

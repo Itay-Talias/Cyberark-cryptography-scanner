@@ -6,20 +6,27 @@ import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import { useState } from "react";
 import { CryptographyScannerApi } from "../api/CryptographyScannerApi";
-import { ResultsContext } from "../App";
 import { useNavigate } from "react-router-dom";
 import "../style/LandingPage.css";
+import { useCookies } from "react-cookie";
 
 export default function LandingPage() {
+    const [cookies, setCookie] = useCookies(["scan_id"]);
     const [organization, setOrganization] = useState("");
     const [token, setToken] = useState("");
-    const { results, setResults } = React.useContext(ResultsContext);
     const navigate = useNavigate();
+
     function handleSubmit() {
         CryptographyScannerApi()
             .scan(organization, token)
             .then((res) => {
-                setResults(res.data);
+                let expires = new Date();
+                expires.setTime(expires.getTime() + 560 * 1000);
+                setCookie("scan_id", res.data.id.toString(), {
+                    path: "/",
+                    expires,
+                });
+                return res;
             });
         navigate("/results");
     }

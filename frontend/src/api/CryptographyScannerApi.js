@@ -9,6 +9,11 @@ export function CryptographyScannerApi() {
             vcs_type: "github",
         });
     }
+    function getResults(scanId) {
+        return axios.get(constants.GET_RESULTS_API, {
+            withCredentials: true,
+        });
+    }
 
-    return { scan };
+    return { scan, getResults };
 }

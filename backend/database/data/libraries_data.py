@@ -1,4 +1,4 @@
-data = {
+libraries_data = {
     "python": {
         "hashlib": {
             "category": "hash",

@@ -1,5 +1,5 @@
 from vcs_api.github_api import GithubAPI
-from database.data.libraries_data import data
+from database.data.libraries_data import libraries_data
 import ast
 from .functoins_finder import Call_finder
 from database.dal_mongo import DALMongoDB
@@ -14,7 +14,7 @@ def analyze_file(file: object, language: str, library: str, connector: DALMongoD
     algorithm_uses = list(map(lambda a: create_algorithm_details(language, library, a, connector), algorithm_uses))
     file_results = {
         "success": file["success"],
-        "category": data[language][library]["category"],
+        "category": libraries_data[language][library]["category"],
         "library": library,
         "algorithms": algorithm_uses,
         "url": file["url"],
