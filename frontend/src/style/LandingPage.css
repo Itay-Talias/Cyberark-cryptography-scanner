@@ -1,10 +1,10 @@
 .login-box {
-    /*background-color: rgba(242, 250, 253, 0.9);*/
+    background-color: rgba(248, 252, 255, 0.8);
     padding: 15px;
     border-radius: 50px;
     display: inline-block;
     border-style:solid;
-    border-color: #1e427a;
+    border-color: #1199d4;
     border-width: thin;
 }
 
