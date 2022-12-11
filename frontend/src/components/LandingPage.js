@@ -37,10 +37,6 @@ export default function LandingPage() {
                 <Grid item xs={6} className="left-box">
                     <Box
                         component="img"
-                        sx={{
-                            height: 220,
-                            width: 870,
-                        }}
                         alt="cyberark logo"
                         src="https://www.cyberark.com/wp-content/uploads/2021/01/cyberark-logo-dark.svg"
                     />
@@ -52,11 +48,11 @@ export default function LandingPage() {
                         Cryptography Scanner
                     </Typography>
                 </Grid>
-                <Grid item justifyContent="center" xs={6} className="right-box">
+                <Grid item justifyContent="center" className="right-box">
                     <div className="login-box">
                         <Box
                             sx={{
-                                width: 500,
+                                width: 350,
                                 maxWidth: "100%",
                             }}
                         >
@@ -72,7 +68,7 @@ export default function LandingPage() {
                         </Box>
                         <Box
                             sx={{
-                                width: 500,
+                                width: 350,
                                 maxWidth: "100%",
                             }}
                         >
