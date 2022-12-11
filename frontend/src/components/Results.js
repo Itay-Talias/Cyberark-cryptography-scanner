@@ -7,6 +7,10 @@ import { ResultsContext } from "../App";
 import { CryptographyScannerApi } from "../api/CryptographyScannerApi";
 import { useEffect, useState } from "react";
 import "../style/Results.css";
+import Divider from "@mui/material/Divider";
+import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined";
+import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
+import { green, red } from "@mui/material/colors";
 
 function createData(results) {
     const rows =
@@ -31,13 +35,13 @@ function createData(results) {
                       });
                   } else if (!file["success"]) {
                       return {
-                          category: "n/a",
-                          library: "n/a",
+                          category: "",
+                          library: "",
                           repo: file["location"]["repo"],
                           path: file["location"]["path"],
-                          algorithm: "n/a",
-                          keyLength: "n/a",
-                          line: "n/a",
+                          algorithm: "syntax error",
+                          keyLength: "",
+                          line: "",
                           scanStatus: "failed",
                           url: file["url"],
                       };
@@ -67,9 +71,8 @@ export default function Results() {
     const { results, setResults } = React.useContext(ResultsContext);
 
     const getResults = () => {
-        const scan_id = localStorage.getItem("scan_id");
         CryptographyScannerApi()
-            .getResults(scan_id)
+            .getResults()
             .then((res) => {
                 if (res?.data?.results) {
                     setResults(res.data.results);
@@ -84,20 +87,52 @@ export default function Results() {
     }, []);
 
     return (
-        <Grid container alignItems="center" justifyContent="center">
-            <Grid item>
-                <Box
-                    component="img"
-                    sx={{
-                        height: 100,
-                        width: 200,
-                    }}
-                    alt="cyberark logo"
-                    src="https://www.cyberark.com/wp-content/uploads/2021/01/cyberark-logo-dark.svg"
-                />
-                <Typography variant="h3" gutterBottom className="title-result">
-                    Cryptography Scanner
-                </Typography>
+        <Grid container justifyContent="center">
+            <Grid container alignItems="center" justifyContent="center">
+                <Grid item>
+                    <Box
+                        component="img"
+                        sx={{
+                            height: 100,
+                            width: 200,
+                        }}
+                        alt="cyberark logo"
+                        src="https://www.cyberark.com/wp-content/uploads/2021/01/cyberark-logo-dark.svg"
+                    />
+                    <Typography
+                        variant="h3"
+                        gutterBottom
+                        className="title-result"
+                    >
+                        Cryptography Scanner
+                    </Typography>
+                </Grid>
+            </Grid>
+            <Grid
+                xs={2}
+                sx={{ m: "1rem" }}
+                display="flex"
+                justifyContent="flex-end"
+            >
+                <Grid item xs={4} display="flex" justifyContent="flex-center">
+                    <CheckCircleOutlineOutlinedIcon
+                        sx={{
+                            color: green[500],
+                            mr: "0.5rem",
+                        }}
+                    />
+                    scan success
+                </Grid>
+                {/* <Divider orientation="vertical" flexItem /> */}
+                <Grid item xs={4} display="flex" justifyContent="flex-center">
+                    <HighlightOffOutlinedIcon
+                        sx={{
+                            color: red[500],
+                            mr: "0.5rem",
+                        }}
+                    />
+                    scan failed
+                </Grid>
             </Grid>
             <EnhancedTable rows={rows}></EnhancedTable>
         </Grid>

@@ -10,12 +10,14 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import TableSortLabel from "@mui/material/TableSortLabel";
 import Paper from "@mui/material/Paper";
-import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 import { visuallyHidden } from "@mui/utils";
 import LinearProgress from "@mui/material/LinearProgress";
 import Link from "@mui/material/Link";
+import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined";
+import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
+import { green, red } from "@mui/material/colors";
 import "../style/ResultsTable.css";
 
 function descendingComparator(a, b, orderBy) {
@@ -49,6 +51,12 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
+    {
+        id: "status",
+        numeric: false,
+        disablePadding: true,
+        label: "  ",
+    },
     {
         id: "algorithm",
         numeric: false,
@@ -90,12 +98,6 @@ const headCells = [
         numeric: false,
         disablePadding: false,
         label: "Category",
-    },
-    {
-        id: "scanStatus",
-        numeric: false,
-        disablePadding: false,
-        label: "Scan status",
     },
     {
         id: "url",
@@ -180,26 +182,6 @@ export default function EnhancedTable({ rows }) {
         setSelected([]);
     };
 
-    const handleClick = (event, name) => {
-        const selectedIndex = selected.indexOf(name);
-        let newSelected = [];
-
-        if (selectedIndex === -1) {
-            newSelected = newSelected.concat(selected, name);
-        } else if (selectedIndex === 0) {
-            newSelected = newSelected.concat(selected.slice(1));
-        } else if (selectedIndex === selected.length - 1) {
-            newSelected = newSelected.concat(selected.slice(0, -1));
-        } else if (selectedIndex > 0) {
-            newSelected = newSelected.concat(
-                selected.slice(0, selectedIndex),
-                selected.slice(selectedIndex + 1)
-            );
-        }
-
-        setSelected(newSelected);
-    };
-
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
@@ -253,6 +235,22 @@ export default function EnhancedTable({ rows }) {
 
                                         return (
                                             <TableRow>
+                                                <TableCell align="left">
+                                                    {row.scanStatus ===
+                                                    "success" ? (
+                                                        <CheckCircleOutlineOutlinedIcon
+                                                            sx={{
+                                                                color: green[500],
+                                                            }}
+                                                        />
+                                                    ) : (
+                                                        <HighlightOffOutlinedIcon
+                                                            sx={{
+                                                                color: red[500],
+                                                            }}
+                                                        />
+                                                    )}
+                                                </TableCell>
                                                 <TableCell
                                                     component="th"
                                                     id={labelId}
@@ -278,9 +276,6 @@ export default function EnhancedTable({ rows }) {
                                                 </TableCell>
                                                 <TableCell align="left">
                                                     {row.category}
-                                                </TableCell>
-                                                <TableCell align="left">
-                                                    {row.scanStatus}
                                                 </TableCell>
                                                 <TableCell align="left">
                                                     <Link
