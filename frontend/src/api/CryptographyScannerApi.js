@@ -11,9 +11,7 @@ export function CryptographyScannerApi() {
     }
     function getResults(scanId) {
         return axios.get(constants.GET_RESULTS_API, {
-            params: {
-                scan_id: scanId,
-            },
+            withCredentials: true,
         });
     }
 

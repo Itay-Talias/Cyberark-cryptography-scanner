@@ -43,7 +43,7 @@ async def start_scan(request: Request):
 
 
 @app.get("/results", status_code=status.HTTP_200_OK)
-async def get_results(scan_id):
+async def get_results(scan_id: Union[str, None] = Cookie(default=None)):
     try:
         return DAL.get_results(scan_id)
     except ValueError as error:
