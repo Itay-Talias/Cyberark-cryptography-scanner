@@ -1,5 +1,0 @@
-ADD_WORD = """INSERT IGNORE INTO words (name) VALUES(%s)"""
-ADD_CATEGORY = """INSERT IGNORE INTO categories (name) VALUES(%s)"""
-ADD_LANGUAGE = """INSERT IGNORE INTO languages (name) VALUES(%s); SELECT LAST_INSERT_ID();"""
-ADD_LIBRARY = """INSERT IGNORE INTO Libraries (name,LANGUAGE_id,category_id) VALUES(%s,%s,%s)"""
-ADD_LANGUAGES_WORDS = """INSERT IGNORE INTO words (word_id, LANGUAGE_id) VALUES(%s,%s)"""

@@ -9,9 +9,7 @@ class DALMongoDB:
         db = client['cryptographyScanner']
         self.results_collection = db['results']
         self.libraries_data_collection = db['libraries_data']
-        self.libraries_data_collection.insert_one(libraries_data)
-        self.libraries_data = libraries_data
-
+        self.libraries_data = self.libraries_data_collection.find_one({"_id" : "libraries"})["data"]
     def add_results(self, _id, results):
         data = {
             "_id": str(_id),

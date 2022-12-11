@@ -11,6 +11,7 @@ pydentic = "*"
 uvicorn = "*"
 pymysql = "*"
 pydantic = "*"
+pymongo ="*"
 
 [dev-packages]
 
