@@ -8,15 +8,14 @@ from error_handler import error_handler
 from vcs_api.vcs_factory import create_vcs_connector
 from extract_files.extract_by_libraries import extract_by_libraries_ast
 from data_analyze.analyze_engine import analyze_all_files
-from database import mongo_db_manager
 from typing import Union
 from database.dal_mongo import get_db_connector
-from database.data.libraries_data import data
+
 
 app = FastAPI()
 
 PYTHON = "python"
-DAL = get_db_connector(data)
+DAL = get_db_connector()
 
 
 def scan(_id, result):
@@ -24,7 +23,7 @@ def scan(_id, result):
                                vcs_type=result["vcs_type"])
     files = extract_by_libraries_ast(org.get_files_from_organization(), DAL.get_libraries_names(PYTHON))
     results = analyze_all_files(files, PYTHON, DAL)
-    mongo_db_manager.add_results(_id, results)
+    DAL.add_results(_id, results)
 
 
 @app.post("/scan", status_code=status.HTTP_201_CREATED)
@@ -46,7 +45,7 @@ async def start_scan(request: Request):
 @app.get("/results", status_code=status.HTTP_200_OK)
 async def get_results(scan_id):
     try:
-        return mongo_db_manager.get_results(scan_id)
+        return DAL.get_results(scan_id)
     except ValueError as error:
         return JSONResponse({"Error": str(error)}, status_code=status.HTTP_400_BAD_REQUEST)
     except TypeError as error:
