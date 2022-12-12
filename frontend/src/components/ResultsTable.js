@@ -202,7 +202,7 @@ export default function EnhancedTable({ rows }) {
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
     return (
-        <Box sx={{ width: "85%" }}>
+        <Box sx={{ width: "87%" }}>
             <Paper sx={{ width: "100%", mb: 2 }}>
                 <TableContainer>
                     <Table

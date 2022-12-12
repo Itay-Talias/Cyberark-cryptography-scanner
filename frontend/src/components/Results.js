@@ -89,16 +89,7 @@ export default function Results() {
     return (
         <Grid container justifyContent="center">
             <Grid container alignItems="center" justifyContent="center">
-                <Grid item>
-                    <Box
-                        component="img"
-                        sx={{
-                            height: 100,
-                            width: 200,
-                        }}
-                        alt="cyberark logo"
-                        src="https://www.cyberark.com/wp-content/uploads/2021/01/cyberark-logo-dark.svg"
-                    />
+                <Grid item sx={{ mt:"3rem"}}>
                     <Typography
                         variant="h3"
                         gutterBottom
@@ -110,11 +101,11 @@ export default function Results() {
             </Grid>
             <Grid
                 xs={2}
-                sx={{ m: "1rem" }}
+                sx={{ m: "1rem", ml:"87rem" }}
                 display="flex"
                 justifyContent="flex-end"
             >
-                <Grid item xs={4} display="flex" justifyContent="flex-center">
+                <Grid item xs={6} display="flex" justifyContent="flex-center">
                     <CheckCircleOutlineOutlinedIcon
                         sx={{
                             color: green[500],
@@ -124,7 +115,7 @@ export default function Results() {
                     scan success
                 </Grid>
                 {/* <Divider orientation="vertical" flexItem /> */}
-                <Grid item xs={4} display="flex" justifyContent="flex-center">
+                <Grid item xs={6} display="flex" justifyContent="flex-center">
                     <HighlightOffOutlinedIcon
                         sx={{
                             color: red[500],
