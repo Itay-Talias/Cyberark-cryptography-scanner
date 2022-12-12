@@ -110,11 +110,11 @@ export default function Results() {
             </Grid>
             <Grid
                 xs={2}
-                sx={{ m: "1rem" }}
+                sx={{ m: "1rem", ml:"87rem" }}
                 display="flex"
                 justifyContent="flex-end"
             >
-                <Grid item xs={4} display="flex" justifyContent="flex-center">
+                <Grid item xs={6} display="flex" justifyContent="flex-center">
                     <CheckCircleOutlineOutlinedIcon
                         sx={{
                             color: green[500],
@@ -124,7 +124,7 @@ export default function Results() {
                     scan success
                 </Grid>
                 {/* <Divider orientation="vertical" flexItem /> */}
-                <Grid item xs={4} display="flex" justifyContent="flex-center">
+                <Grid item xs={6} display="flex" justifyContent="flex-center">
                     <HighlightOffOutlinedIcon
                         sx={{
                             color: red[500],
