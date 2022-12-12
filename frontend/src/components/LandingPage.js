@@ -46,11 +46,7 @@ export default function LandingPage() {
         <div className="container-login">
             <Grid container alignItems="center">
                 <Grid item xs={6} className="left-box">
-                    <Box
-                        component="img"
-                        alt="cyberark logo"
-                        src="https://www.cyberark.com/wp-content/uploads/2021/01/cyberark-logo-dark.svg"
-                    />
+
                     <Typography
                         variant="h1"
                         gutterBottom

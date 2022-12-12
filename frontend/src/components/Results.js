@@ -89,16 +89,7 @@ export default function Results() {
     return (
         <Grid container justifyContent="center">
             <Grid container alignItems="center" justifyContent="center">
-                <Grid item>
-                    <Box
-                        component="img"
-                        sx={{
-                            height: 100,
-                            width: 200,
-                        }}
-                        alt="cyberark logo"
-                        src="https://www.cyberark.com/wp-content/uploads/2021/01/cyberark-logo-dark.svg"
-                    />
+                <Grid item sx={{ mt:"3rem"}}>
                     <Typography
                         variant="h3"
                         gutterBottom
