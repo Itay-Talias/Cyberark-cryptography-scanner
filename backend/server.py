@@ -10,7 +10,7 @@ from extract_files.extract_by_libraries import extract_by_libraries_ast
 from data_analyze.analyze_engine import analyze_all_files
 from typing import Union
 from database.dal_mongo import get_db_connector
-
+from github import GithubException
 
 app = FastAPI()
 
@@ -18,9 +18,7 @@ PYTHON = "python"
 DAL = get_db_connector()
 
 
-def scan(_id, result):
-    org = create_vcs_connector(token=result["token"], organization=result["organization"],
-                               vcs_type=result["vcs_type"])
+def scan(_id, org):
     files = extract_by_libraries_ast(org.get_files_from_organization(), DAL.get_libraries_names(PYTHON))
     results = analyze_all_files(files, PYTHON, DAL)
     DAL.add_results(_id, results)
@@ -31,8 +29,10 @@ async def start_scan(request: Request):
     try:
         result: dict = await request.json()
         error_handler.post_request(client_data=result)
+        org = create_vcs_connector(token=result["token"], organization=result["organization"],
+                                   vcs_type=result["vcs_type"])
         _id = uuid.uuid1()
-        tread = Thread(target=scan, args=(_id, result))
+        tread = Thread(target=scan, args=(_id,org))
         tread.start()
         response = JSONResponse(content={"id": str(_id)})
         return response
@@ -40,6 +40,9 @@ async def start_scan(request: Request):
         return JSONResponse({"Error": str(error)}, status_code=status.HTTP_400_BAD_REQUEST)
     except TypeError as error:
         return JSONResponse({"Error": str(error)}, status_code=status.HTTP_400_BAD_REQUEST)
+    except Exception as error:
+        return JSONResponse({"Error": str(error)}, status_code=status.HTTP_400_BAD_REQUEST)
+
 
 
 @app.get("/results", status_code=status.HTTP_200_OK)

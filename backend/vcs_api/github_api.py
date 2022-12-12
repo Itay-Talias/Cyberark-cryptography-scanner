@@ -1,12 +1,15 @@
-from github import Github, Organization, Repository, ContentFile
+from github import Github, Organization, Repository, ContentFile,GithubException
 from .vsc_api import VscAPI
-
+from fastapi.responses import JSONResponse
+from fastapi import status
 
 class GithubAPI(VscAPI):
 
     def __init__(self, token: str, organization: str):
         super().__init__(organization=organization)
         self.github_connector = Github(token)
+        if self.github_connector.rate_limiting == (60,60):
+            raise GithubException("github connection failed")
 
     def get_organization(self) -> Organization:
         return self.github_connector.get_organization(self.organization)

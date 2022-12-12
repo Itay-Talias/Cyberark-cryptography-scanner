@@ -4,7 +4,7 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { CryptographyScannerApi } from "../api/CryptographyScannerApi";
 import { useNavigate } from "react-router-dom";
 import "../style/LandingPage.css";
@@ -15,6 +15,14 @@ export default function LandingPage() {
     const [organization, setOrganization] = useState("");
     const [token, setToken] = useState("");
     const navigate = useNavigate();
+    useEffect(() => {
+        let expires = new Date();
+        expires.setTime(expires.getTime() + 560 * 1000);
+        setCookie("scan_id", "", {
+            path: "/",
+            expires,
+        });
+    }, []);
 
     function handleSubmit() {
         CryptographyScannerApi()
@@ -26,9 +34,12 @@ export default function LandingPage() {
                     path: "/",
                     expires,
                 });
-                return res;
+                if (res.status === 200) {
+                    navigate("/results");
+                } else {
+                    window.alert("Connection failed");
+                }
             });
-        navigate("/results");
     }
 
     return (
