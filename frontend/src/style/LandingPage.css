@@ -1,11 +1,15 @@
 .login-box {
-    /*background-color: rgba(242, 250, 253, 0.9);*/
+    background-color: rgba(248, 252, 255, 0.8);
     padding: 15px;
     border-radius: 50px;
     display: inline-block;
     border-style:solid;
-    border-color: #1e427a;
+    border-color: #1199d4;
     border-width: thin;
+    position: relative;
+    top: -8rem;
+    right: -8rem;
+
 }
 
 .title-prod {
@@ -17,8 +21,9 @@
     text-transform: uppercase;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    font-size: 60px;
+    font-size: 50px !important;
 }
+
 .right-box {
     padding-top: 25%;
 }
@@ -27,24 +32,23 @@
     padding-bottom: 10%;
 }
 
-img{
+img {
     padding-top:5%;
     padding-left:5%;
 }
 
 .btn-login {
-    margin: 30px !important;
-    width: 120px !important;
-    height: 50px !important;
+    margin: 10px !important;
+    width: 100px !important;
+    height: 40px !important;
     background-color: #1e427a !important;
 }
 
 .btn-login:hover {
-    color: black;
+    color: #fcfcfc;
     background-color: #1199d4 !important;
 }
 
-/* CSS */
 .btn-login {
   padding: 0.6em 2em;
   border: none;
